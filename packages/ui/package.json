@@ -38,10 +38,12 @@
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit",
     "test": "vitest",
-    "coverage": "vitest --coverage"
+    "coverage": "vitest --coverage",
+    "studio": "panda studio"
   },
   "devDependencies": {
     "@pandacss/dev": "^1.11.3",
+    "@pandacss/studio": "^1.11.3",
     "@repo/eslint-config": "workspace:*",
     "@repo/scout-preset": "workspace:*",
     "@repo/typescript-config": "workspace:*",
