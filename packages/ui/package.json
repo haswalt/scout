@@ -65,7 +65,8 @@
   "dependencies": {
     "@repo/scout-preset": "workspace:*",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.79.0"
   },
   "peerDependencies": {
     "lucide-react": "^1.20.0"
