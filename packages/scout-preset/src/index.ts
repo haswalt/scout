@@ -55,6 +55,7 @@ export default definePreset({
         line: { value: "#eee8f7" },
         success: { fg: { value: "#1e8e5e" }, bg: { value: "#e7f6ee" } },
         warning: { fg: { value: "#b07400" }, bg: { value: "#fbf1dc" } },
+        danger: { fg: { value: "#c0492b" }, bg: { value: "#fbeae6" } },
       },
     },
 
