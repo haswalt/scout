@@ -9,6 +9,8 @@ import type {
 } from "./client";
 import { client } from "./client.gen";
 import type {
+  GetAddressFindData,
+  GetAddressFindResponses,
   GetDeprivationData,
   GetDeprivationResponses,
   GetLiveListingsSearchData,
@@ -32,6 +34,24 @@ export type Options<
    */
   meta?: keyof ClientMeta extends never ? Record<string, unknown> : ClientMeta;
 };
+
+/**
+ * Address Find
+ *
+ * Search for UK addresses by query string
+ */
+export const getAddressFind = <ThrowOnError extends boolean = false>(
+  options: Options<GetAddressFindData, ThrowOnError>,
+): RequestResult<GetAddressFindResponses, unknown, ThrowOnError> =>
+  (options.client ?? client).get<
+    GetAddressFindResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ name: "Authorization", type: "apiKey" }],
+    url: "/address/find",
+    ...options,
+  });
 
 /**
  * Deprivation Index

@@ -14,6 +14,24 @@ components:
       name: Authorization
       description: Use format 'Api-Key YOUR_API_KEY'
   schemas:
+    AddressSuggestion:
+      type: objct
+      properties:
+        uprn:
+          type: number
+          example: "100060445645"
+        uprn_token:
+          type: string
+          example: "gAAAAABqMv4xvCyGepUMpJnbj_H1Ef031biSOTn97bhPIxmVsCr9mnemrk0UxNFR2HZO8soEPxEAGs41Qfbc50DQAT8h1u_y1w=="
+        address:
+          type: string
+          example: "Manor House Manor Road"
+        postcode:
+          type: string
+          example: "PO11 0QW"
+        town:
+          type: string
+          example: "Hayling Island"
     AreaLocationInfo:
       type: object
       properties:
@@ -108,17 +126,17 @@ components:
           type: string
           example: "PO11 0QW"
         lsoa:
-          $ref: '#/components/schemas/AreaLocationInfo'
+          $ref: "#/components/schemas/AreaLocationInfo"
         lad:
-          $ref: '#/components/schemas/AreaLocationInfo'
+          $ref: "#/components/schemas/AreaLocationInfo"
         overall:
-          $ref: '#/components/schemas/OverallDeprivation'
+          $ref: "#/components/schemas/OverallDeprivation"
         domains:
           type: array
           items:
-            $ref: '#/components/schemas/DeprivationDomain'
+            $ref: "#/components/schemas/DeprivationDomain"
         metadata:
-          $ref: '#/components/schemas/DeprivationMetadata'
+          $ref: "#/components/schemas/DeprivationMetadata"
     PropertyListing:
       type: object
       properties:
@@ -214,10 +232,28 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/PropertyListing'
+            $ref: "#/components/schemas/PropertyListing"
 security:
   - ApiKeyAuth: []
 paths:
+  /address/find:
+    get:
+      summary: Address Find
+      description: Search for UK addresses by query string
+      parameters:
+        - in: query
+          name: query
+          required: true
+          schema:
+            type: string
+          description: Street address, postcode, or place name
+      responses:
+        "200":
+          description: Successful response returning address suggestions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddressSuggestion"
   /deprivation/:
     get:
       summary: Deprivation Index
@@ -230,12 +266,12 @@ paths:
             type: string
           description: UK Postcode to search (e.g., PO11 0QW).
       responses:
-        '200':
+        "200":
           description: Successful response returning area deprivation metrics.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeprivationResponse'
+                $ref: "#/components/schemas/DeprivationResponse"
   /live-listings/search/:
     get:
       summary: Live Listings
@@ -421,9 +457,9 @@ paths:
             default: 10
           description: Maximum items dispatched inside the nested query loop array.
       responses:
-        '200':
+        "200":
           description: Successful response returning active listings with pagination.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LiveListingsResponse'
+                $ref: "#/components/schemas/LiveListingsResponse"

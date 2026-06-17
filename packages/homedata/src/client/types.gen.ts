@@ -4,6 +4,8 @@ export type ClientOptions = {
   baseUrl: "https://api.homedata.co.uk" | (string & {});
 };
 
+export type AddressSuggestion = unknown;
+
 export type AreaLocationInfo = {
   code?: string;
   name?: string;
@@ -82,6 +84,28 @@ export type LiveListingsResponse = {
   total_pages?: number;
   results?: Array<PropertyListing>;
 };
+
+export type GetAddressFindData = {
+  body?: never;
+  path?: never;
+  query: {
+    /**
+     * Street address, postcode, or place name
+     */
+    query: string;
+  };
+  url: "/address/find";
+};
+
+export type GetAddressFindResponses = {
+  /**
+   * Successful response returning address suggestions
+   */
+  200: AddressSuggestion;
+};
+
+export type GetAddressFindResponse =
+  GetAddressFindResponses[keyof GetAddressFindResponses];
 
 export type GetDeprivationData = {
   body?: never;
