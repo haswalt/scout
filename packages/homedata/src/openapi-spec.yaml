@@ -1,0 +1,429 @@
+openapi: 3.1.0
+info:
+  title: Homedata UK Property API
+  version: 1.0.0
+  description: Validated OpenAPI spec matching real HomeData schema payloads for automated codegen.
+servers:
+  - url: https://api.homedata.co.uk
+    description: Production API
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Use format 'Api-Key YOUR_API_KEY'
+  schemas:
+    AreaLocationInfo:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "E01022944"
+        name:
+          type: string
+          example: "Havant 015C"
+    OverallDeprivation:
+      type: object
+      properties:
+        rank:
+          type: integer
+          example: 26053
+        decile:
+          type: integer
+          example: 8
+        score:
+          type: integer
+          example: 3
+        label:
+          type: string
+          example: "Fairly High Deprivation"
+        short_label:
+          type: string
+          example: "Fairly High"
+        lad_rank:
+          type: integer
+          example: 139
+        lad_rank_description:
+          type: string
+          example: "Local authority ranks 139 out of 317"
+    DeprivationDomain:
+      type: object
+      properties:
+        domain:
+          type: string
+          example: "income"
+        label:
+          type: string
+          example: "Income"
+        short_label:
+          type: string
+          example: "Income"
+        description:
+          type: string
+          example: "Proportion of population experiencing deprivation relating to low income"
+        rank:
+          type: integer
+          example: 29742
+        decile:
+          type: integer
+          example: 9
+        score:
+          type: integer
+          example: 2
+        score_label:
+          type: string
+          example: "High Deprivation"
+        score_short:
+          type: string
+          example: "High"
+        lad_rank:
+          type: integer
+          example: 122
+    DeprivationMetadata:
+      type: object
+      properties:
+        source:
+          type: string
+          example: "MHCLG English Indices of Deprivation 2019"
+        total_lsoas:
+          type: integer
+          example: 33755
+        total_lads:
+          type: integer
+          example: 317
+        score_explanation:
+          type: string
+          example: "Score is 1-10 where 10 = least deprived (best)"
+        rank_explanation:
+          type: string
+          example: "Rank 1 = most deprived, higher = less deprived"
+        neighbourhood_explanation:
+          type: string
+          example: "Data is for the LSOA containing this postcode."
+    DeprivationResponse:
+      type: object
+      properties:
+        postcode:
+          type: string
+          example: "PO11 0QW"
+        lsoa:
+          $ref: '#/components/schemas/AreaLocationInfo'
+        lad:
+          $ref: '#/components/schemas/AreaLocationInfo'
+        overall:
+          $ref: '#/components/schemas/OverallDeprivation'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeprivationDomain'
+        metadata:
+          $ref: '#/components/schemas/DeprivationMetadata'
+    PropertyListing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "ed7004e0-c655-4dc5-96cc-d6b1b476ddc2"
+        street:
+          type: string
+          example: "Blythe Meadow"
+        postcode:
+          type: string
+          example: "KY5 0YJ"
+        transaction_type:
+          type: string
+          example: "Sale"
+        latest_status:
+          type: string
+          example: "For sale"
+        latest_price:
+          type: integer
+          example: 290000
+        source:
+          type: string
+          example: "home.co.uk"
+        bedrooms:
+          type: integer
+          nullable: true
+          example: 4
+        bathrooms:
+          type: integer
+          nullable: true
+          example: 3
+        reception_rooms:
+          type: integer
+          nullable: true
+          example: null
+        property_type:
+          type: string
+          example: "Detached"
+        ownership:
+          type: string
+          example: "Freehold"
+        is_new_build:
+          type: boolean
+          example: true
+        has_garden:
+          type: boolean
+          nullable: true
+          example: null
+        has_parking:
+          type: boolean
+          nullable: true
+          example: null
+        has_solar_panels:
+          type: boolean
+          nullable: true
+          example: null
+        is_reduced:
+          type: boolean
+          example: false
+        times_reduced:
+          type: integer
+          example: 0
+        is_withdrawn:
+          type: boolean
+          example: false
+        days_on_market:
+          type: integer
+          example: 0
+        added_date:
+          type: string
+          format: date
+          example: "2026-06-17"
+        agent_name:
+          type: string
+          example: "Slater Hogg & Howison"
+    LiveListingsResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 10000
+        page:
+          type: integer
+          example: 1
+        page_size:
+          type: integer
+          example: 1
+        total_pages:
+          type: integer
+          example: 10000
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyListing'
+security:
+  - ApiKeyAuth: []
+paths:
+  /deprivation/:
+    get:
+      summary: Deprivation Index
+      description: IMD data for any postcode across 10 distinct domains.
+      parameters:
+        - in: query
+          name: postcode
+          required: true
+          schema:
+            type: string
+          description: UK Postcode to search (e.g., PO11 0QW).
+      responses:
+        '200':
+          description: Successful response returning area deprivation metrics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeprivationResponse'
+  /live-listings/search/:
+    get:
+      summary: Live Listings
+      description: Real-time property listings powered by Elasticsearch with advanced market filtering.
+      parameters:
+        - in: query
+          name: postcode
+          required: false
+          schema:
+            type: string
+          description: UK Postcode to filter live property market listings (e.g., NR1 1TA).
+        - in: query
+          name: boundary_id
+          required: false
+          schema:
+            type: string
+          description: Unique internal boundary identifier (e.g., 14624).
+        - in: query
+          name: transaction_type
+          required: false
+          schema:
+            type: string
+            enum: [Sale, Rent]
+          description: The listing transaction type.
+        - in: query
+          name: bedrooms
+          required: false
+          schema:
+            type: integer
+          description: Specific number of target bedrooms.
+        - in: query
+          name: max_bedrooms
+          required: false
+          schema:
+            type: integer
+          description: Maximum target threshold for bedrooms.
+        - in: query
+          name: min_price
+          required: false
+          schema:
+            type: integer
+          description: Minimum price limit.
+        - in: query
+          name: max_price
+          required: false
+          schema:
+            type: integer
+          description: Maximum price limit.
+        - in: query
+          name: property_type
+          required: false
+          schema:
+            type: string
+          description: Comma-separated list of target types (e.g., Detached,Flat).
+        - in: query
+          name: status
+          required: false
+          schema:
+            type: string
+          description: Comma-separated marketing status strings (e.g., For sale,Sold STC).
+        - in: query
+          name: new_builds_only
+          required: false
+          schema:
+            type: string
+          description: Restricts results to new build developments if present.
+        - in: query
+          name: reduced_only
+          required: false
+          schema:
+            type: string
+          description: Filters only for properties that have undergone price reductions.
+        - in: query
+          name: include_withdrawn
+          required: false
+          schema:
+            type: string
+          description: Toggle to include properties pulled from market.
+        - in: query
+          name: date_from
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Target start window for added date (YYYY-MM-DD).
+        - in: query
+          name: date_to
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Target end window for added date (YYYY-MM-DD).
+        - in: query
+          name: min_dom
+          required: false
+          schema:
+            type: integer
+          description: Minimum required days on market.
+        - in: query
+          name: has_garden
+          required: false
+          schema:
+            type: string
+          description: Filter for outdoor space.
+        - in: query
+          name: has_parking
+          required: false
+          schema:
+            type: string
+          description: Filter for parking access.
+        - in: query
+          name: has_solar_panels
+          required: false
+          schema:
+            type: string
+          description: Filter for solar implementations.
+        - in: query
+          name: construction_age_band
+          required: false
+          schema:
+            type: string
+          description: Comma-separated historical construction eras (e.g., 1930-1949,Pre-1919).
+        - in: query
+          name: garden_type
+          required: false
+          schema:
+            type: string
+          description: Comma-separated classification parameters (e.g., Private,Shared).
+        - in: query
+          name: parking_type
+          required: false
+          schema:
+            type: string
+          description: Comma-separated spacing classifications (e.g., Driveway,Garage).
+        - in: query
+          name: min_epc_band
+          required: false
+          schema:
+            type: string
+          description: Worst acceptable alphabetical energy band rating.
+        - in: query
+          name: max_epc_band
+          required: false
+          schema:
+            type: string
+          description: Best target alphabetical energy band rating.
+        - in: query
+          name: min_floor_area
+          required: false
+          schema:
+            type: integer
+          description: Minimum interior dimension limits in square meters.
+        - in: query
+          name: max_floor_area
+          required: false
+          schema:
+            type: integer
+          description: Maximum interior dimension limits in square meters.
+        - in: query
+          name: reduction_count_min
+          required: false
+          schema:
+            type: integer
+          description: Minimum acceptable sequential marketing adjustments.
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Field and ordering vector parameter (e.g., -added_date).
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: Pagination sequence index anchor.
+        - in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+            default: 10
+          description: Maximum items dispatched inside the nested query loop array.
+      responses:
+        '200':
+          description: Successful response returning active listings with pagination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiveListingsResponse'
