@@ -11,7 +11,8 @@
         "!.next/dev/**",
         "styled-system/**",
         "styles.css"
-      ]
+      ],
+      "env": ["HOMEDATA_API_KEY"]
     },
     "lint": {
       "dependsOn": ["^lint"]
