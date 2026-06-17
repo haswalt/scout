@@ -4,7 +4,18 @@ export type ClientOptions = {
   baseUrl: "https://api.homedata.co.uk" | (string & {});
 };
 
-export type AddressSuggestion = unknown;
+export type AddressSuggestion = {
+  uprn: number;
+  uprn_token: string;
+  address: string;
+  postcode: string;
+  town: string;
+};
+
+export type AddressFindResponse = {
+  count: number;
+  suggestions: Array<AddressSuggestion>;
+};
 
 export type AreaLocationInfo = {
   code?: string;
@@ -101,7 +112,7 @@ export type GetAddressFindResponses = {
   /**
    * Successful response returning address suggestions
    */
-  200: AddressSuggestion;
+  200: AddressFindResponse;
 };
 
 export type GetAddressFindResponse =

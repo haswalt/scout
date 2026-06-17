@@ -7,6 +7,7 @@ export {
   type Options,
 } from "./sdk.gen";
 export type {
+  AddressFindResponse,
   AddressSuggestion,
   AreaLocationInfo,
   ClientOptions,

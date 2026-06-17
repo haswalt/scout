@@ -6,5 +6,10 @@ export default defineConfig({
     path: "./src/client",
     postProcess: ["prettier"],
   },
-  plugins: ["@hey-api/client-next"],
+  plugins: [
+    {
+      name: "@hey-api/client-next",
+      runtimeConfigPath: "./src/config.ts",
+    },
+  ],
 });

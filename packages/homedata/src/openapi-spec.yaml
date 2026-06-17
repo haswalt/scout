@@ -15,7 +15,13 @@ components:
       description: Use format 'Api-Key YOUR_API_KEY'
   schemas:
     AddressSuggestion:
-      type: objct
+      type: object
+      required:
+        - uprn
+        - uprn_token
+        - address
+        - postcode
+        - town
       properties:
         uprn:
           type: number
@@ -32,6 +38,18 @@ components:
         town:
           type: string
           example: "Hayling Island"
+    AddressFindResponse:
+      type: object
+      required:
+        - count
+        - suggestions
+      properties:
+        count:
+          type: number
+        suggestions:
+          type: array
+          items:
+            $ref: "#/components/schemas/AddressSuggestion"
     AreaLocationInfo:
       type: object
       properties:
@@ -253,7 +271,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AddressSuggestion"
+                $ref: "#/components/schemas/AddressFindResponse"
   /deprivation/:
     get:
       summary: Deprivation Index
