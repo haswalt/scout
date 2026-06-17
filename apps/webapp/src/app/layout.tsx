@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Lora } from "next/font/google";
-import "./panda.css";
+import "./global.css";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -13,7 +13,7 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Scount | Discover your next neighbourhood",
+  title: "Scout | Discover your next neighbourhood",
   description:
     "Enter any UK postcode and get an instant, friendly profile of the area — schools, transport, prices and more.",
 };
