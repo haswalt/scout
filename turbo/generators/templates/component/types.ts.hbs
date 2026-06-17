@@ -1,0 +1,8 @@
+import { type RecipeVariantProps } from "@repo/ui/css";
+import { type ComponentPropsWithoutRef } from "react";
+
+import { type {{name}}Styles } from "./styles";
+
+type {{pascalCase name}}StyleProps = RecipeVariantProps<typeof {{name}}Styles>;
+
+export type {{pascalCase name}}Props = {{pascalCase name}}StyleProps & ComponentPropsWithoutRef<"div"> 
