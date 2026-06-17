@@ -2,76 +2,84 @@ import { cva } from "@repo/ui/css";
 
 export const buttonStyles = cva({
   base: {
-    alignItems: "center",
-    borderRadius: "full",
-    cursor: "pointer",
     display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "sm",
     fontFamily: "body",
     fontWeight: "700",
-    gap: "sm",
-    justifyContent: "center",
-    lineHeight: "1",
-    transitionDuration: "150ms",
-    transitionProperty: "background-color, border-color, color, box-shadow",
-    transitionTimingFunction: "ease",
+    lineHeight: "1.1",
+    borderRadius: "full",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: "transparent",
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    userSelect: "none",
+    minHeight: "44px",
+    transition: "background 0.15s, border-color 0.15s, transform 0.1s",
+    _active: {
+      transform: "scale(0.97)",
+    },
     _focusVisible: {
       outline: "2px solid token(colors.accent)",
       outlineOffset: "2px",
     },
     _disabled: {
+      opacity: "0.5",
       cursor: "not-allowed",
-      opacity: "0.55",
+      transform: "none",
       pointerEvents: "none",
     },
   },
   variants: {
     variant: {
-      primary: {
-        backgroundColor: "accent",
-        borderColor: "accent",
-        borderWidth: "1px",
+      solid: {
+        bg: "accent",
         color: "white",
-        boxShadow: "marker",
         _hover: {
-          backgroundColor: "accentHover",
-          borderColor: "accentHover",
+          bg: "accentHover",
         },
       },
-      secondary: {
-        backgroundColor: "surface",
+      chip: {
+        bg: "surface",
+        color: "accentSoft",
         borderColor: "border",
-        borderWidth: "1px",
-        color: "accent",
+        fontWeight: "600",
         _hover: {
-          backgroundColor: "panel",
           borderColor: "panelBorder",
+          bg: "lilac.50",
         },
       },
       ghost: {
-        backgroundColor: "transparent",
-        borderColor: "transparent",
-        borderWidth: "1px",
+        bg: "transparent",
         color: "accent",
         _hover: {
-          backgroundColor: "panel",
+          bg: "lilac.100",
         },
       },
     },
     size: {
       sm: {
-        fontSize: "0.875rem",
-        minHeight: "2.25rem",
-        paddingInline: "md",
+        minHeight: "36px",
+        fontSize: "0.8125rem",
+        px: "14px",
+        py: "7px",
       },
       md: {
-        fontSize: "1rem",
-        minHeight: "2.75rem",
-        paddingInline: "lg",
+        fontSize: "0.8125rem",
+        px: "md",
+        py: "sm",
+      },
+      lg: {
+        fontSize: { base: "1rem", md: "1.0625rem" },
+        px: { base: "24px", md: "30px" },
+        py: { base: "12px", md: "14px" },
       },
     },
   },
   defaultVariants: {
+    variant: "solid",
     size: "md",
-    variant: "primary",
   },
 });
