@@ -1,9 +1,10 @@
 "use client";
 
+import { ADDRESS_SUGGESTIONS } from "@/config/constants";
+import { fetchPostcode } from "@/lib/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
-import { Box, Center, Flex, VStack, Wrap } from "@repo/ui/jsx";
+import { Center, VStack, Wrap } from "@repo/ui/jsx";
 import { Search } from "@repo/ui/search";
 import { Typography } from "@repo/ui/typography";
 import { useRouter } from "next/navigation";
@@ -11,7 +12,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  postcode: z.string().min(3),
+  address: z.string().min(3),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -21,17 +22,24 @@ export default function Home() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isValid, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
-      postcode: "",
+      address: "",
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = ({ postcode }) => {
+  const onSubmit: SubmitHandler<FormValues> = async ({ address }) => {
+    const postcode = await fetchPostcode(address);
     router.push(`/${postcode}`);
+  };
+
+  const applySuggestion = (suggestion: string) => {
+    setValue("address", suggestion);
+    handleSubmit(onSubmit)();
   };
 
   return (
@@ -54,16 +62,23 @@ export default function Home() {
           valid={isValid && !isSubmitting}
           placeholder="Try a postcode, e.g. BS8 2NT"
           autoComplete="postal-code"
-          {...register("postcode")}
+          {...register("address")}
         />
 
         <Wrap gap="sm" justify="center" align="center">
           <Typography variant="caption" tone="soft">
             Popular:
           </Typography>
-          <Button variant="chip" size="sm">
-            Clifton, Bristol
-          </Button>
+          {ADDRESS_SUGGESTIONS.map((as) => (
+            <Button
+              key={as}
+              variant="chip"
+              size="sm"
+              onClick={() => applySuggestion(as)}
+            >
+              {as}
+            </Button>
+          ))}
         </Wrap>
       </VStack>
     </Center>
