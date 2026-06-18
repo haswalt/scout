@@ -216,5 +216,20 @@ export default definePreset({
       outline: "2px solid token(colors.accent)",
       outlineOffset: "2px",
     },
+    "::view-transition-old(root), ::view-transition-new(root)": {
+      animationDuration: "0.4s",
+      animationTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    // Shared search pill morph (both routes name the field `search-field`).
+    "::view-transition-group(search-field)": {
+      animationDuration: "0.5s",
+      animationTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+    "@media (prefers-reduced-motion: reduce)": {
+      "::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*)":
+        {
+          animation: "none !important",
+        },
+    },
   },
 });
