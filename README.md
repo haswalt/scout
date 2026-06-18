@@ -1,159 +1,79 @@
-# Turborepo starter
+# Scout
 
-This Turborepo starter is maintained by the Turborepo core team.
+Scout is a UK neighbourhood discovery application. Users can search by address
+or postcode and navigate to an area profile backed by HomeData.
 
-## Using this example
+The repository is a TypeScript monorepo built with Next.js, React, pnpm,
+Turborepo, Panda CSS, Vitest, and Testing Library.
 
-Run the following command:
+## Getting started
 
-```sh
-npx create-turbo@latest
-```
+Requirements:
 
-## What's inside?
+- Node.js 24;
+- pnpm 11.7.0;
+- a HomeData API key.
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Install dependencies and create a local environment file:
 
 ```sh
-cd my-turborepo
-turbo build
+pnpm install
+printf 'HOMEDATA_API_KEY=your-key\\n' > .env.local
+pnpm dev
 ```
 
-Without global `turbo`, use your package manager:
+The web application runs at [http://localhost:3000](http://localhost:3000).
+Environment files are ignored and must not be committed.
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
-```
+## Common commands
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+| Command                   | Purpose                                         |
+| ------------------------- | ----------------------------------------------- |
+| `pnpm dev`                | Run development tasks                           |
+| `pnpm build`              | Build the workspace                             |
+| `pnpm lint`               | Run ESLint                                      |
+| `pnpm check-types`        | Run TypeScript checks                           |
+| `pnpm test`               | Run package tests in watch mode where supported |
+| `pnpm test:ci`            | Run UI tests once with enforced coverage        |
+| `pnpm test:e2e`           | Run the current E2E placeholder                 |
+| `pnpm codegen`            | Regenerate API and styling outputs              |
+| `pnpm generate:component` | Generate a UI component scaffold                |
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Repository structure
 
-```sh
-turbo build --filter=docs
-```
+| Path                         | Responsibility                                   |
+| ---------------------------- | ------------------------------------------------ |
+| `apps/webapp`                | Next.js product application                      |
+| `packages/ui`                | Shared accessible UI components and Panda output |
+| `packages/scout-preset`      | Design tokens and global styling                 |
+| `packages/homedata`          | Generated HomeData API client                    |
+| `packages/eslint-config`     | Shared lint configuration                        |
+| `packages/typescript-config` | Shared TypeScript configuration                  |
 
-Without global `turbo`:
+## Engineering documentation
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+- [Architecture](docs/ARCHITECTURE.md)
+- [Adding features](docs/FEATURE_DEVELOPMENT.md)
+- [Code generation](docs/CODE_GENERATION.md)
+- [Testing](docs/TESTING.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [AI-assisted development](docs/AI-USAGE.md)
 
-### Develop
+## CI and deployment
 
-To develop all apps and packages, run the following command:
+GitHub Actions runs linting, type checks, unit tests with coverage, the workspace
+build, and an explicit E2E placeholder. Pull requests from repository branches
+deploy to Vercel Preview, pushes to `develop` deploy to Staging, and `v*` tags
+deploy to Production. Successful tag deployments create a GitHub Release and
+generated changelog.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+See [deployment documentation](docs/DEPLOYMENT.md) for Vercel project settings,
+required GitHub secrets, release tagging, and environment setup. See
+[CHANGELOG.md](CHANGELOG.md) for the changelog policy.
 
-```sh
-cd my-turborepo
-turbo dev
-```
+## Accessibility
 
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Shared UI components use native semantics, accessible names, keyboard behavior,
+disabled states, and decorative icon treatment. Accessibility behavior is
+covered by colocated unit tests. Automated browser-level accessibility checks
+should be added with the future E2E suite.
