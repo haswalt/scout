@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Lora } from "next/font/google";
 import "./global.css";
+import { ViewTransition } from "react";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -25,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${lora.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ViewTransition>{children}</ViewTransition>
+      </body>
     </html>
   );
 }
