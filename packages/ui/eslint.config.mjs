@@ -2,8 +2,8 @@ import { config } from "@repo/eslint-config/react-internal";
 
 /** @type {import("eslint").Linter.Config} */
 export default [
-    ...config,
-    {
-        ignores: ["./styled-system/**"]
-    }
-]
+  ...config,
+  {
+    ignores: ["./coverage/**", "./styled-system/**"],
+  },
+];

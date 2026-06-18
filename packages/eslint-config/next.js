@@ -24,6 +24,7 @@ export const nextJsConfig = [
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "styled-system/**",
   ]),
   {
     ...pluginReact.configs.flat.recommended,
