@@ -9,12 +9,12 @@ export async function fetchPostcode(address: string) {
         tags: ["address"],
       },
       query: {
-        query: encodeURI(address),
+        query: encodeURIComponent(address),
       },
     });
 
-    if (data && data.count > 0) {
-      return data.suggestions[0].postcode.toLowerCase().replaceAll(" ", "");
+    if (data?.suggestions.length) {
+      return data.suggestions[0]?.postcode.toLowerCase().replaceAll(" ", "");
     }
   } catch (error) {
     console.error(error);
