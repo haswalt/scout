@@ -8,6 +8,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "input",
         name: "name",
         message: "Component name (e.g. button):",
+        filter: (input: string) => input.replace("-", " ").toLowerCase().trim(),
       },
     ],
     actions: [
