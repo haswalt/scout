@@ -27,7 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${lora.variable}`}>
       <body>
-        <ViewTransition>{children}</ViewTransition>
+        <ViewTransition
+          default="none"
+          update={{
+            "nav-forward": "page-shutter",
+            default: "none",
+          }}
+        >
+          {children}
+        </ViewTransition>
       </body>
     </html>
   );
