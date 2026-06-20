@@ -23,6 +23,7 @@ export default function Home() {
     register,
     handleSubmit,
     setValue,
+    trigger,
     formState: { isValid, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -34,24 +35,27 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<FormValues> = async ({ address }) => {
     const postcode = await fetchPostcode(address);
-    router.push(`/${postcode}`);
+    router.push(`/${postcode}`, {
+      transitionTypes: ["nav-forward"],
+    });
   };
 
   const applySuggestion = (suggestion: string) => {
     setValue("address", suggestion);
+    trigger("address");
     handleSubmit(onSubmit)();
   };
 
   return (
     <Center as="main" minH="100dvh" p="lg" bg="bg">
-      <VStack gap="md" textAlign="center" maxW="560px" w="100%">
-        <Typography variant="eyebrow" tone="soft" as="h2" align="center">
+      <VStack gap="md" textAlign="center" maxW="prose" w="100%">
+        <Typography variant="eyebrow" tone="label" as="h2">
           Scout
         </Typography>
         <Typography variant="display" tone="heading" as="h1" align="center">
           Discover your next neighbourhood
         </Typography>
-        <Typography align="center" tone="muted">
+        <Typography variant="body" tone="muted" align="center">
           Enter any UK postcode and get an instant, friendly profile of the
           area.
         </Typography>
@@ -66,17 +70,17 @@ export default function Home() {
         />
 
         <Wrap gap="sm" justify="center" align="center">
-          <Typography variant="caption" tone="soft">
+          <Typography variant="caption" tone="label">
             Popular:
           </Typography>
           {ADDRESS_SUGGESTIONS.map((as) => (
             <Button
-              key={as}
+              key={as.postcode}
               variant="chip"
               size="sm"
-              onClick={() => applySuggestion(as)}
+              onClick={() => applySuggestion(as.postcode)}
             >
-              {as}
+              {as.label}
             </Button>
           ))}
         </Wrap>
