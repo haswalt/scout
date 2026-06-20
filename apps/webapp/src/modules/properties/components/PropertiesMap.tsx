@@ -1,28 +1,26 @@
 "use client";
 
-import { PropertyListing } from "@repo/homedata";
 import { styled } from "@repo/ui/jsx";
 import Map from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-type Props = {
-  properties: PropertyListing[] | undefined;
-};
-
 // @TODO: The map doesn't display any properties nor is it centered on the postcode
 //        as our test service postcode geocoding doesn't currently work.
-export const PropertiesMap = ({ properties }: Props) => {
+// type Props = {
+//   properties: PropertyListing[] | undefined;
+// };
+export const PropertiesMap = () => {
   return (
     <styled.div
       rounded="md"
-      h={{ base: "260px", md: "240px" }}
+      h={{ base: "280px", md: "380px" }}
       overflow="hidden"
     >
       <Map
         initialViewState={{
-          longitude: -100,
-          latitude: 40,
-          zoom: 3.5,
+          longitude: 1.088,
+          latitude: 50.8198,
+          zoom: 6,
         }}
         mapStyle="https://demotiles.maplibre.org/style.json"
       />
