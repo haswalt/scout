@@ -15,28 +15,17 @@ export const badgeStyles = cva({
   },
   variants: {
     tone: {
-      accent: {
-        color: "accent",
-        bg: "panel",
-      },
-      success: {
-        color: "success.fg",
-        bg: "success.bg",
-      },
-      warning: {
-        color: "warning.fg",
-        bg: "warning.bg",
-      },
-      danger: {
-        color: "danger.fg",
-        bg: "danger.bg",
-      },
+      accent: { color: "accent", bg: "panel" },
+      success: { color: "success.fg", bg: "success.bg" },
+      warning: { color: "warning.fg", bg: "warning.bg" },
+      danger: { color: "danger.fg", bg: "danger.bg" },
     },
+    // Soft tag used for property features (Garden, Parking…).
     soft: {
       true: {
         bg: "lilac.100",
-        color: "accentSoft",
-        borderRadius: "sm",
+        color: "accentMuted",
+        borderRadius: "xs",
         fontWeight: "600",
         fontSize: "0.6875rem",
         px: "9px",
@@ -54,8 +43,5 @@ export const badgeStyles = cva({
       },
     },
   },
-  defaultVariants: {
-    tone: "accent",
-    dot: false,
-  },
+  defaultVariants: { tone: "accent", dot: false },
 });

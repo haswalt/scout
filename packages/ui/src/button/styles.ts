@@ -16,11 +16,9 @@ export const buttonStyles = cva({
     cursor: "pointer",
     whiteSpace: "nowrap",
     userSelect: "none",
-    minHeight: "44px",
+    minHeight: "44px", // comfortable touch target on mobile
     transition: "background 0.15s, border-color 0.15s, transform 0.1s",
-    _active: {
-      transform: "scale(0.97)",
-    },
+    _active: { transform: "scale(0.97)" },
     _focusVisible: {
       outline: "2px solid token(colors.accent)",
       outlineOffset: "2px",
@@ -37,40 +35,24 @@ export const buttonStyles = cva({
       solid: {
         bg: "accent",
         color: "white",
-        _hover: {
-          bg: "accentHover",
-        },
+        _hover: { bg: "accentHover" },
       },
       chip: {
         bg: "surface",
-        color: "accentSoft",
+        color: "accentMuted", // #5b4e86 — matches the popular-postcode chips
         borderColor: "border",
         fontWeight: "600",
-        _hover: {
-          borderColor: "panelBorder",
-          bg: "lilac.50",
-        },
+        _hover: { borderColor: "lilacHover", bg: "lilac.50" },
       },
       ghost: {
         bg: "transparent",
         color: "accent",
-        _hover: {
-          bg: "lilac.100",
-        },
+        _hover: { bg: "lilac.100" },
       },
     },
     size: {
-      sm: {
-        minHeight: "36px",
-        fontSize: "0.8125rem",
-        px: "14px",
-        py: "7px",
-      },
-      md: {
-        fontSize: "0.8125rem",
-        px: "md",
-        py: "sm",
-      },
+      sm: { minHeight: "36px", fontSize: "0.8125rem", px: "14px", py: "7px" },
+      md: { minHeight: "38px", fontSize: "0.8125rem", px: "md", py: "sm" },
       lg: {
         fontSize: { base: "1rem", md: "1.0625rem" },
         px: { base: "24px", md: "30px" },
@@ -78,8 +60,5 @@ export const buttonStyles = cva({
       },
     },
   },
-  defaultVariants: {
-    variant: "solid",
-    size: "md",
-  },
+  defaultVariants: { variant: "solid", size: "md" },
 });

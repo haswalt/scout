@@ -3,6 +3,13 @@ import { definePreset } from "@pandacss/dev";
 export default definePreset({
   name: "scout-preset",
   theme: {
+    // Mobile-first breakpoints (min-width). `base` is implicit (no query).
+    breakpoints: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+    },
     tokens: {
       fonts: {
         body: {
@@ -11,27 +18,33 @@ export default definePreset({
         serif: { value: "var(--font-lora), Georgia, serif" },
       },
 
-      // Three steps only — keep layouts honest.
+      // Tight layout scale — gaps, margins, card/section padding.
       spacing: {
-        sm: { value: "0.5rem" }, // 8px
-        md: { value: "1rem" }, //   16px
+        xs: { value: "0.25rem" }, //  4px
+        sm: { value: "0.5rem" }, //   8px
+        md: { value: "1rem" }, //    16px
         lg: { value: "1.75rem" }, // 28px
+        xl: { value: "2rem" }, //    32px — hero panel / generous padding
+      },
+
+      // Layout width caps — so pages never reach for magic numbers.
+      sizes: {
+        prose: { value: "35rem" }, //  560px — hero / reading column
+        field: { value: "20rem" }, //  320px — compact header search
+        shell: { value: "70rem" }, // 1120px — dashboard content shell
       },
 
       radii: {
-        sm: { value: "0.625rem" }, // 10px
-        md: { value: "1rem" }, //     16px
-        lg: { value: "1.375rem" }, // 22px
+        xs: { value: "0.5rem" }, //   8px — chips, skeletons, feature tags
+        sm: { value: "0.75rem" }, //  12px — icon tiles, small controls
+        md: { value: "1rem" }, //     16px — cards, surfaces
+        lg: { value: "1.375rem" }, // 22px — AI hero panel
         full: { value: "9999px" },
       },
 
       shadows: {
         card: { value: "0 14px 32px -16px rgba(76, 44, 146, 0.40)" },
-        raised: {
-          value:
-            "0 18px 50px -18px rgba(76, 44, 146, 0.45), 0 2px 6px rgba(42, 36, 64, 0.06)",
-        },
-        marker: { value: "0 6px 14px -4px rgba(76, 44, 146, 0.55)" },
+        focusRing: { value: "0 0 0 3px {colors.lilac.200}" },
       },
 
       colors: {
@@ -39,20 +52,32 @@ export default definePreset({
         purple: {
           DEFAULT: { value: "#4c2c92" },
           hover: { value: "#3c2175" },
-          soft: { value: "#8a6fcb" },
+          mid: { value: "#6b4fb0" }, // AI status dot / streaming caret
+          soft: { value: "#8a6fcb" }, // logo accent square
+          muted: { value: "#5b4e86" }, // spec icons / feature-tag text
         },
         lilac: {
           50: { value: "#faf8fc" },
           100: { value: "#f0eafb" },
           200: { value: "#ece3fa" },
           border: { value: "#decef6" },
+          hover: { value: "#c9b8ec" }, // chip / interactive hover border
         },
         ink: {
           DEFAULT: { value: "#2a2440" },
           strong: { value: "#2a1b52" },
           muted: { value: "#6f6a85" },
+          label: { value: "#9b93b4" }, // eyebrows, units, footer labels
+          faint: { value: "#b7b1c9" }, // secondary captions
         },
         line: { value: "#eee8f7" },
+        // Illustrative neighbourhood-map palette.
+        map: {
+          land: { value: "#e9ecf3" },
+          park: { value: "#dcebdd" },
+          water: { value: "#d7e6f2" },
+          road: { value: "#fbfbfd" },
+        },
         success: { fg: { value: "#1e8e5e" }, bg: { value: "#e7f6ee" } },
         warning: { fg: { value: "#b07400" }, bg: { value: "#fbf1dc" } },
         danger: { fg: { value: "#c0492b" }, bg: { value: "#fbeae6" } },
@@ -69,10 +94,21 @@ export default definePreset({
         border: { value: "{colors.line}" },
         text: { value: "{colors.ink}" },
         textMuted: { value: "{colors.ink.muted}" },
+        textLabel: { value: "{colors.ink.label}" }, // eyebrows / units / labels
+        textFaint: { value: "{colors.ink.faint}" }, // secondary captions
         heading: { value: "{colors.ink.strong}" },
         accent: { value: "{colors.purple}" },
         accentHover: { value: "{colors.purple.hover}" },
+        accentMid: { value: "{colors.purple.mid}" }, // AI status dot / caret
         accentSoft: { value: "{colors.purple.soft}" },
+        accentMuted: { value: "{colors.purple.muted}" }, // spec / feature text
+        lilacHover: { value: "{colors.lilac.hover}" }, // interactive hover border
+        // Map roles.
+        mapLand: { value: "{colors.map.land}" },
+        mapPark: { value: "{colors.map.park}" },
+        mapWater: { value: "{colors.map.water}" },
+        mapRoad: { value: "{colors.map.road}" },
+        mapInk: { value: "{colors.ink.strong}" }, // markers / centre pin
       },
     },
 
@@ -127,6 +163,7 @@ export default definePreset({
           fontSize: "1.3125rem",
           lineHeight: "1.62",
           fontWeight: "500",
+          letterSpacing: "0.002em",
         },
       },
     },
@@ -142,14 +179,10 @@ export default definePreset({
         from: { opacity: "0", transform: "translateY(10px) scale(0.985)" },
         to: { opacity: "1", transform: "none" },
       },
+      // Property images / map fading in once Live Listings resolve.
       fadeIn: {
         from: { opacity: "0" },
         to: { opacity: "1" },
-      },
-      // Property images / map fading in once Live Listings resolve.
-      fadeInUp: {
-        from: { opacity: "0", transform: "translateY(16px)" },
-        to: { opacity: "1", transform: "none" },
       },
       // Typewriter cursor on the streaming summary.
       cursorBlink: {
@@ -187,7 +220,6 @@ export default definePreset({
       },
       snapIn: { value: { animation: "snapIn 0.5s ease both" } },
       fadeIn: { value: { animation: "fadeIn 0.5s ease both" } },
-      fadeInUp: { value: { animation: "fadeInUp 0.5s ease both" } },
       cursorBlink: { value: { animation: "cursorBlink 1s steps(1) infinite" } },
       pulseDot: { value: { animation: "pulseDot 1s ease-in-out infinite" } },
       slideUpOut: {
@@ -216,14 +248,19 @@ export default definePreset({
       outline: "2px solid token(colors.accent)",
       outlineOffset: "2px",
     },
-    "::view-transition-old(root), ::view-transition-new(root)": {
-      animationDuration: "0.4s",
-      animationTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+    "::view-transition-group(.page-shutter)": {
+      animation: "none",
     },
-    // Shared search pill morph (both routes name the field `search-field`).
-    "::view-transition-group(search-field)": {
-      animationDuration: "0.5s",
-      animationTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+    "::view-transition-image-pair(.page-shutter)": {
+      isolation: "auto",
+    },
+    "::view-transition-old(.page-shutter)": {
+      zIndex: "2",
+      animation: "slideUpOut 0.72s cubic-bezier(0.7, 0, 0.18, 1) both",
+    },
+    "::view-transition-new(.page-shutter)": {
+      zIndex: "0",
+      animation: "none",
     },
     "@media (prefers-reduced-motion: reduce)": {
       "::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*)":

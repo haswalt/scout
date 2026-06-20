@@ -11,46 +11,26 @@ export const iconTileStyles = sva({
       color: "accent",
       bg: "panel",
     },
-    icon: {},
+    icon: {
+      display: "block",
+      flexShrink: "0",
+    },
   },
   variants: {
     size: {
       sm: {
-        root: {
-          width: "38px",
-          height: "38px",
-          borderRadius: "11px",
-        },
-        icon: {
-          width: "30px",
-          height: "30px",
-        },
+        root: { width: "38px", height: "38px", borderRadius: "sm" },
+        icon: { width: "20px", height: "20px", fontSize: "20px" },
       },
       md: {
-        root: {
-          width: "44px",
-          height: "44px",
-          borderRadius: "sm",
-        },
-        icon: {
-          width: "38px",
-          height: "38px",
-        },
+        root: { width: "44px", height: "44px", borderRadius: "sm" },
+        icon: { width: "22px", height: "22px", fontSize: "22px" },
       },
       lg: {
-        root: {
-          width: "52px",
-          height: "52px",
-          borderRadius: "14px",
-        },
-        icon: {
-          width: "44px",
-          height: "44px",
-        },
+        root: { width: "52px", height: "52px", borderRadius: "md" },
+        icon: { width: "24px", height: "24px", fontSize: "24px" },
       },
     },
   },
-  defaultVariants: {
-    size: "sm",
-  },
+  defaultVariants: { size: "sm" },
 });

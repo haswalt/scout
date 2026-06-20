@@ -5,6 +5,7 @@ import { searchStyles } from "./styles";
 import { type SearchProps } from "./types";
 import { Button } from "../button";
 import { styled } from "../../styled-system/jsx";
+import { Typography } from "../typography";
 
 /**
  * Postcode search field with a submit action.
@@ -22,23 +23,40 @@ import { styled } from "../../styled-system/jsx";
  * />
  * ```
  */
-export const Search = ({ onSubmit, size, valid, ...props }: SearchProps) => {
+export const Search = ({
+  onSubmit,
+  size,
+  valid,
+  readOnly,
+  ...props
+}: SearchProps) => {
   const styles = searchStyles({ size });
 
+  const Root = readOnly ? styled.div : styled.form;
+
   return (
-    <styled.form className={styles.root} onSubmit={onSubmit}>
+    <Root className={styles.root} onSubmit={onSubmit}>
       <Pin className={styles.icon} aria-hidden="true" />
-      <input
-        type="text"
-        className={styles.input}
-        aria-label="Search by postcode"
-        {...props}
-      />
+      {readOnly ? (
+        <Typography variant="eyebrow">{props.value}</Typography>
+      ) : (
+        <input
+          name="search"
+          type="text"
+          className={styles.input}
+          aria-label="Search by postcode"
+          {...props}
+        />
+      )}
       <div className={styles.submit}>
-        <Button type="submit" size="lg" disabled={!valid}>
+        <Button
+          type="submit"
+          size={size === "header" ? "sm" : "lg"}
+          disabled={!valid}
+        >
           Explore
         </Button>
       </div>
-    </styled.form>
+    </Root>
   );
 };

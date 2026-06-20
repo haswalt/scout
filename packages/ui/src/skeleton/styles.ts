@@ -2,27 +2,17 @@ import { cva } from "@repo/ui/css";
 
 export const skeletonStyles = cva({
   base: {
+    layerStyle: "skeleton",
     animationStyle: "skeleton",
-    borderRadius: "7px",
+    borderRadius: "xs",
   },
   variants: {
     shape: {
-      text: {
-        height: "1rem",
-        borderRadius: "7px",
-      },
-      block: {
-        borderRadius: "md",
-      },
-      circle: {
-        borderRadius: "full",
-      },
-      pill: {
-        borderRadius: "full",
-      },
+      text: { height: "1rem", borderRadius: "xs" },
+      block: { borderRadius: "md" },
+      circle: { borderRadius: "full" },
+      pill: { borderRadius: "full" },
     },
   },
-  defaultVariants: {
-    shape: "text",
-  },
+  defaultVariants: { shape: "text" },
 });

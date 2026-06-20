@@ -7,7 +7,6 @@ export const searchStyles = sva({
       display: "flex",
       alignItems: "center",
       gap: "sm",
-      width: "100%",
       bg: "surface",
       borderRadius: "full",
       borderWidth: "1px",
@@ -16,16 +15,14 @@ export const searchStyles = sva({
       transition: "border-color 0.15s, box-shadow 0.15s",
       _focusWithin: {
         borderColor: "accent",
-        boxShadow: "0 0 0 3px token(colors.lilac.200)",
+        boxShadow: "focusRing",
       },
     },
     icon: {
       display: "flex",
       alignItems: "center",
       flexShrink: "0",
-      color: "accentSoft",
-      width: "32px",
-      height: "32px",
+      color: "textLabel",
     },
     input: {
       flex: "1",
@@ -38,7 +35,7 @@ export const searchStyles = sva({
       color: "text",
       letterSpacing: "0.01em",
       _placeholder: {
-        color: "accentSoft",
+        color: "textLabel",
       },
     },
     submit: {
@@ -49,11 +46,14 @@ export const searchStyles = sva({
     size: {
       hero: {
         root: {
+          width: "100%",
           gap: "10px",
           p: { base: "8px", md: "10px" },
           boxShadow: "card",
         },
         icon: {
+          width: "32px",
+          height: "32px",
           pl: { base: "12px", md: "16px" },
           fontSize: { base: "20px", md: "22px" },
         },
@@ -65,22 +65,22 @@ export const searchStyles = sva({
       },
       header: {
         root: {
-          gap: "9px",
-          pl: "16px",
-          pr: "8px",
-          py: "8px",
+          gap: { base: "6px", md: "9px" },
+          pl: { base: "12px", md: "16px" },
+          pr: { base: "6px", md: "8px" },
+          py: { base: "6px", md: "8px" },
         },
         icon: {
-          fontSize: "17px",
+          width: { base: "18px", md: "22px" },
+          height: { base: "18px", md: "22px" },
+          fontSize: { base: "15px", md: "17px" },
         },
         input: {
-          fontSize: "14px",
+          fontSize: { base: "13px", md: "14px" },
           fontWeight: "700",
         },
       },
     },
   },
-  defaultVariants: {
-    size: "hero",
-  },
+  defaultVariants: { size: "hero" },
 });
