@@ -1,12 +1,11 @@
 import { type PropertyListing } from "@repo/homedata";
 import { Badge } from "@repo/ui/badge";
 import { Card, CardBody, CardFooter, CardMedia } from "@repo/ui/card";
-import { Box, Flex, HStack, Wrap } from "@repo/ui/jsx";
+import { Box, Flex, HStack } from "@repo/ui/jsx";
 import { Typography } from "@repo/ui/typography";
 import { PropertySpec } from "./PropertySpec";
-import { Bath, Bed, BookCheck, Sofa } from "lucide-react";
+import { Bath, Bed, Sofa } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import { formatRelative, parseISO } from "date-fns";
 
 type Props = {
   index: number;
@@ -49,17 +48,17 @@ export const PropertyCard = ({ index, property }: Props) => {
       <CardBody display="flex" flexDirection="column" gap="md">
         <Box>
           <Typography variant="title" tone="heading">
-            {formatCurrency(property.latest_price ?? 0)}
+            {formatCurrency(property.latest_price)}
           </Typography>
           <Typography variant="caption">{property.street}</Typography>
           <Typography variant="caption" tone="faint">
-            {property.bedrooms ?? 0} bed, {property.property_type}
+            {property.bedrooms} bed, {property.property_type}
           </Typography>
         </Box>
 
         <HStack gap="md">
-          <PropertySpec icon={Bed} value={`${property.bedrooms ?? 0}`} />
-          <PropertySpec icon={Bath} value={`${property.bathrooms ?? 0}`} />
+          <PropertySpec icon={Bed} value={`${property.bedrooms}`} />
+          <PropertySpec icon={Bath} value={`${property.bathrooms}`} />
           <PropertySpec
             icon={Sofa}
             value={`${property.reception_rooms ?? 0}`}
@@ -67,7 +66,6 @@ export const PropertyCard = ({ index, property }: Props) => {
         </HStack>
 
         <Flex gap="xs" flexWrap="wrap">
-          {/* feature lik ehas garden... */}
           {property.is_new_build && <Badge soft>New Build</Badge>}
           {property.has_garden && <Badge soft>Garden</Badge>}
           {property.has_parking && <Badge soft>Parking</Badge>}
@@ -76,8 +74,8 @@ export const PropertyCard = ({ index, property }: Props) => {
       </CardBody>
 
       <CardFooter>
-        <Typography variant="caption" tone="label">
-          {formatRelative(property.added_date ?? "", new Date())}
+        <Typography variant="caption" tone="faint">
+          {property.days_on_market} days on market
         </Typography>
         <Typography variant="caption" tone="label">
           {property.agent_name}
