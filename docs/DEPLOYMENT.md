@@ -1,10 +1,10 @@
 # Deployment guide
 
-Scout uses GitHub Actions and Vercel for three deployment stages:
+Scout uses GitHub Actions and Vercel for two deployment environments:
 
 ```text
 Pull request -> Preview
-Merge/push to develop -> Staging
+Merge/push to develop -> Preview
 Version tag -> Production -> GitHub Release
 ```
 
@@ -24,7 +24,7 @@ treated as a complete release gate.
 | Git event                 | Vercel target | GitHub environment | Result                                   |
 | ------------------------- | ------------- | ------------------ | ---------------------------------------- |
 | Pull request to `develop` | `preview`     | `preview`          | Isolated review deployment               |
-| Push to `develop`         | `staging`     | `staging`          | Shared integration deployment            |
+| Push to `develop`         | `preview`     | `preview`          | Preview deployment of integrated changes |
 | Tag matching `v*`         | `production`  | `production`       | Production deployment and GitHub Release |
 | Manual workflow run       | `preview`     | `preview`          | Manually requested preview               |
 
@@ -53,12 +53,11 @@ the latest successful run.
 A preview is not production approval. It may use different data, credentials,
 domains, caching, and protection settings.
 
-## Staging from `develop`
+## Preview from `develop`
 
 Merging a pull request, or otherwise pushing to `develop`, deploys the resulting
-commit to the custom Vercel `staging` environment.
-
-Staging is the shared integration environment. Use it to verify:
+commit to Vercel's Preview environment. This is the shared integration
+deployment for the latest `develop` commit. Use it to verify:
 
 - the merged result rather than an individual pull request branch;
 - environment-specific API credentials and runtime configuration;
@@ -66,12 +65,11 @@ Staging is the shared integration environment. Use it to verify:
 - migrations or external-service changes before release;
 - release-candidate smoke tests.
 
-Do not point production domains at Staging. Staging configuration should be as
-close to Production as practical without reusing production secrets or data.
-
-If Staging fails, fix forward through a reviewed pull request or revert the
-offending change on `develop`. Do not create a production tag from a commit that
-has not passed Staging verification.
+Do not point production domains at Preview. Preview configuration should be
+close enough to Production to exercise integrations without reusing production
+secrets or data. If the `develop` preview fails, fix forward through a reviewed
+pull request or revert the offending change. Do not create a production tag
+from a commit that has not passed Preview verification.
 
 ## Production releases
 
@@ -81,7 +79,7 @@ Production.
 ### Prepare a release
 
 1. Confirm `develop` is green in GitHub Actions.
-2. Verify the current `develop` deployment in Staging.
+2. Verify the current `develop` deployment in Preview.
 3. Confirm release-facing pull requests have appropriate changelog labels.
 4. Choose the next semantic version:
    - patch (`v1.2.3`) for compatible fixes;
@@ -138,8 +136,7 @@ passed the workflow rather than rebuilding source separately.
 ## Initial setup
 
 Create or link a Vercel project with its Root Directory set to `apps/webapp`.
-Create a custom Vercel environment named `staging`, then configure
-`HOMEDATA_API_KEY` in Preview, Staging, and Production.
+Configure `HOMEDATA_API_KEY` in Preview and Production.
 
 Add these GitHub Actions repository secrets:
 
@@ -153,13 +150,13 @@ The organization and project IDs are available in `.vercel/project.json` after
 running `vercel link`. The `.vercel` directory is intentionally ignored and
 must not be committed.
 
-Create GitHub environments named `preview`, `staging`, and `production`.
-Environment protection rules should require approval before production
-deployment. Keep the Production environment restricted to maintainers who are
-authorized to release.
+Create GitHub environments named `preview` and `production`. Environment
+protection rules should require approval before production deployment. Keep
+the Production environment restricted to maintainers who are authorized to
+release.
 
-Configure `HOMEDATA_API_KEY` separately for Preview, Staging, and Production.
-Do not copy production credentials into lower environments.
+Configure `HOMEDATA_API_KEY` separately for Preview and Production. Do not copy
+production credentials into Preview.
 
 ## Troubleshooting
 
@@ -168,11 +165,10 @@ Do not copy production credentials into lower environments.
 Fork pull requests intentionally skip deployment. For internal branches, confirm
 the Vercel secrets exist and all prerequisite jobs passed.
 
-### Staging or Production uses the wrong configuration
+### Preview or Production uses the wrong configuration
 
 Confirm the matching Vercel environment contains the expected variables and
-that the custom environment is named exactly `staging`. Rerun the workflow after
-correcting Vercel configuration.
+rerun the workflow after correcting Vercel configuration.
 
 ### GitHub Release was not created
 
@@ -184,10 +180,10 @@ workflow token has `contents: write` permission for the release job.
 
 For Preview, push a correction or close the pull request.
 
-For Staging, revert or fix the change on `develop`; the next successful push
-replaces the Staging deployment.
+For the shared `develop` Preview, revert or fix the change on `develop`; the
+next successful push creates a replacement Preview deployment.
 
 For Production, use the Vercel dashboard to restore a known-good deployment
 when immediate mitigation is required. Then revert or fix the source through a
-pull request, verify Staging, and publish a new patch release so source history,
+pull request, verify Preview, and publish a new patch release so source history,
 the production artifact, and the GitHub Release history converge.

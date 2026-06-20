@@ -63,9 +63,9 @@ Environment files are ignored and must not be committed.
 
 GitHub Actions runs linting, type checks, unit tests with coverage, the workspace
 build, and an explicit E2E placeholder. Pull requests from repository branches
-deploy to Vercel Preview, pushes to `develop` deploy to Staging, and `v*` tags
-deploy to Production. Successful tag deployments create a GitHub Release and
-generated changelog.
+and pushes to `develop` deploy to Vercel Preview. `v*` tags deploy to
+Production. Successful tag deployments create a GitHub Release and generated
+changelog.
 
 See [deployment documentation](docs/DEPLOYMENT.md) for Vercel project settings,
 required GitHub secrets, release tagging, and environment setup. See
