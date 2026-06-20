@@ -1,5 +1,5 @@
 import { Typography } from "@repo/ui/typography";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type Props = {
   icon: LucideIcon;

@@ -1,14 +1,13 @@
 "use server";
 
 import {
-  DeprivationResponse,
+  type DeprivationResponse,
   getAddressFind,
   getAddressPostcodeByPostcode,
   getDeprivation,
   getLiveListingsSearch,
-  LiveListingsResponse,
-  PostcodeLookup,
-  PostcodeLookupResponse,
+  type LiveListingsResponse,
+  type PostcodeLookup,
 } from "@repo/homedata";
 
 export async function fetchPostcode(address: string) {

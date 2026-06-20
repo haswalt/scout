@@ -1,9 +1,8 @@
-import { Grid, Stack, styled } from "@repo/ui/jsx";
+import { Grid, Stack } from "@repo/ui/jsx";
 import { MapViewSkeleton } from "./skeletons/MapViewSkeleton";
 import { Typography } from "@repo/ui/typography";
 import { fetchProperties } from "@/lib/actions";
 import { PropertyCard } from "./PropertyCard";
-import { Map } from "@vis.gl/react-maplibre";
 import { Suspense } from "react";
 import { PropertiesMap } from "./PropertiesMap";
 
@@ -21,7 +20,7 @@ export const PropertiesContent = async ({ postcode }: Props) => {
       </Typography>
 
       <Suspense fallback={<MapViewSkeleton />}>
-        <PropertiesMap properties={results} />
+        <PropertiesMap />
       </Suspense>
 
       <Grid

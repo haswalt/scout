@@ -8,7 +8,7 @@ import { Center, VStack, Wrap } from "@repo/ui/jsx";
 import { Search } from "@repo/ui/search";
 import { Typography } from "@repo/ui/typography";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({

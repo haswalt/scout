@@ -4,9 +4,3 @@ export const ADDRESS_SUGGESTIONS = [
   { label: "Gilmore Place, Edinburgh", postcode: "EH3 9NE" },
   { label: "West Wittering, West Sussex", postcode: "PO20 8FJ" },
 ];
-
-export const TONE_MAP = {
-  succes: "Least deprived",
-  warning: "Around average",
-  default: "More deprived",
-};
