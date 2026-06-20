@@ -153,6 +153,7 @@ export default definePreset({
           fontFamily: "body",
           fontSize: "1.5rem",
           fontWeight: "800",
+          lineHeight: 0.8,
           letterSpacing: "-0.02em",
         },
       },
