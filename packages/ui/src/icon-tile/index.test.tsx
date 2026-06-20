@@ -6,7 +6,11 @@ import { IconTile } from "./";
 
 describe("IconTile", () => {
   it("renders the supplied icon as decorative content", () => {
-    const { container } = render(<IconTile icon={MapPin} />);
+    const { container } = render(
+      <IconTile>
+        <MapPin />
+      </IconTile>,
+    );
     const tile = container.firstElementChild;
     const icon = container.querySelector("svg");
 
@@ -17,14 +21,24 @@ describe("IconTile", () => {
 
   it("applies each size variant", () => {
     const { container, rerender } = render(
-      <IconTile icon={MapPin} size="sm" />,
+      <IconTile size="sm">
+        <MapPin />
+      </IconTile>,
     );
     const smallClasses = container.firstElementChild?.className;
 
-    rerender(<IconTile icon={MapPin} size="md" />);
+    rerender(
+      <IconTile size="md">
+        <MapPin />
+      </IconTile>,
+    );
     const mediumClasses = container.firstElementChild?.className;
 
-    rerender(<IconTile icon={MapPin} size="lg" />);
+    rerender(
+      <IconTile size="lg">
+        <MapPin />
+      </IconTile>,
+    );
     const largeClasses = container.firstElementChild?.className;
 
     expect(mediumClasses).not.toBe(smallClasses);

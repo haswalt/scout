@@ -11,15 +11,17 @@ import { type IconTileProps } from "./types";
  *
  * @example
  * ```tsx
- * <IconTile icon={MapPin} size="md" />
+ * <IconTile size="md">
+ *   <Star />
+ * </IconTile>
  * ```
  */
-export const IconTile = ({ icon: Glyph, size }: IconTileProps) => {
+export const IconTile = ({ size, children }: IconTileProps) => {
   const styles = iconTileStyles({ size });
 
   return (
     <div className={styles.root} aria-hidden="true">
-      <Glyph className={styles.icon} aria-hidden="true" />
+      {children}
     </div>
   );
 };
