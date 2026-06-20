@@ -11,6 +11,8 @@ import { client } from "./client.gen";
 import type {
   GetAddressFindData,
   GetAddressFindResponses,
+  GetAddressPostcodeByPostcodeData,
+  GetAddressPostcodeByPostcodeResponses,
   GetDeprivationData,
   GetDeprivationResponses,
   GetLiveListingsSearchData,
@@ -34,6 +36,30 @@ export type Options<
    */
   meta?: keyof ClientMeta extends never ? Record<string, unknown> : ClientMeta;
 };
+
+/**
+ * Postcode Lookup
+ *
+ * All registered addresses at a postcode
+ */
+export const getAddressPostcodeByPostcode = <
+  ThrowOnError extends boolean = false,
+>(
+  options: Options<GetAddressPostcodeByPostcodeData, ThrowOnError>,
+): RequestResult<
+  GetAddressPostcodeByPostcodeResponses,
+  unknown,
+  ThrowOnError
+> =>
+  (options.client ?? client).get<
+    GetAddressPostcodeByPostcodeResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ name: "Authorization", type: "apiKey" }],
+    url: "/address/postcode/{postcode}",
+    ...options,
+  });
 
 /**
  * Address Find

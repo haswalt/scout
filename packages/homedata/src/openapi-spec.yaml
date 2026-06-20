@@ -14,6 +14,49 @@ components:
       name: Authorization
       description: Use format 'Api-Key YOUR_API_KEY'
   schemas:
+    PostcodeLookup:
+      type: object
+      required:
+        - uprn
+        - uprn_token
+        - address
+        - building_name
+        - building_number
+        - sub_building
+        - street
+        - town
+      properties:
+        uprn:
+          type: string
+        uprn_token:
+          type: string
+        address:
+          type: string
+        building_name:
+          type: string
+        building_number:
+          type: string
+        sub_building:
+          type: string
+        street:
+          type: string
+        town:
+          type: string
+    PostcodeLookupResponse:
+      type: object
+      required:
+        - postcode
+        - count
+        - addresses
+      properties:
+        postcode:
+          type: string
+        count:
+          type: number
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/PostcodeLookup"
     AddressSuggestion:
       type: object
       required:
@@ -52,6 +95,9 @@ components:
             $ref: "#/components/schemas/AddressSuggestion"
     AreaLocationInfo:
       type: object
+      required:
+        - code
+        - name
       properties:
         code:
           type: string
@@ -61,6 +107,14 @@ components:
           example: "Havant 015C"
     OverallDeprivation:
       type: object
+      required:
+        - rank
+        - decile
+        - score
+        - label
+        - short_label
+        - lad_rank
+        - lad_rank_description
       properties:
         rank:
           type: integer
@@ -85,6 +139,17 @@ components:
           example: "Local authority ranks 139 out of 317"
     DeprivationDomain:
       type: object
+      required:
+        - domain
+        - label
+        - short_label
+        - description
+        - rank
+        - decile
+        - score
+        - score_label
+        - score_short
+        - lad_rank
       properties:
         domain:
           type: string
@@ -118,6 +183,13 @@ components:
           example: 122
     DeprivationMetadata:
       type: object
+      required:
+        - source
+        - total_lsoas
+        - total_lads
+        - score_explanation
+        - rank_explanation
+        - neighbourhood_explanation
       properties:
         source:
           type: string
@@ -139,6 +211,13 @@ components:
           example: "Data is for the LSOA containing this postcode."
     DeprivationResponse:
       type: object
+      required:
+        - postcode
+        - lsoa
+        - lad
+        - overall
+        - domains
+        - metadata
       properties:
         postcode:
           type: string
@@ -157,6 +236,29 @@ components:
           $ref: "#/components/schemas/DeprivationMetadata"
     PropertyListing:
       type: object
+      required:
+        - id
+        - street
+        - postcode
+        - transaction_type
+        - latest_status
+        - latest_price
+        - source
+        - bedrooms
+        - bathrooms
+        - reception_rooms
+        - property_type
+        - ownership
+        - is_new_build
+        - has_garden
+        - has_parking
+        - has_solar_panels
+        - is_reduced
+        - times_reduced
+        - is_withdrawn
+        - days_on_market
+        - added_date
+        - agent_name
       properties:
         id:
           type: string
@@ -234,6 +336,12 @@ components:
           example: "Slater Hogg & Howison"
     LiveListingsResponse:
       type: object
+      required:
+        - count
+        - page
+        - page_size
+        - total_pages
+        - results
       properties:
         count:
           type: integer
@@ -254,6 +362,23 @@ components:
 security:
   - ApiKeyAuth: []
 paths:
+  /address/postcode/{postcode}:
+    get:
+      summary: Postcode Lookup
+      description: All registered addresses at a postcode
+      parameters:
+        - in: path
+          name: postcode
+          required: true
+          schema:
+            type: string
+          description: UK postcode (e.g. SW1A 2AA, E1 1AA)
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostcodeLookupResponse"
   /address/find/:
     get:
       summary: Address Find

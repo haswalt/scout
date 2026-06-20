@@ -4,6 +4,23 @@ export type ClientOptions = {
   baseUrl: "https://api.homedata.co.uk" | (string & {});
 };
 
+export type PostcodeLookup = {
+  uprn: string;
+  uprn_token: string;
+  address: string;
+  building_name: string;
+  building_number: string;
+  sub_building: string;
+  street: string;
+  town: string;
+};
+
+export type PostcodeLookupResponse = {
+  postcode: string;
+  count: number;
+  addresses: Array<PostcodeLookup>;
+};
+
 export type AddressSuggestion = {
   uprn: number;
   uprn_token: string;
@@ -18,83 +35,102 @@ export type AddressFindResponse = {
 };
 
 export type AreaLocationInfo = {
-  code?: string;
-  name?: string;
+  code: string;
+  name: string;
 };
 
 export type OverallDeprivation = {
-  rank?: number;
-  decile?: number;
-  score?: number;
-  label?: string;
-  short_label?: string;
-  lad_rank?: number;
-  lad_rank_description?: string;
+  rank: number;
+  decile: number;
+  score: number;
+  label: string;
+  short_label: string;
+  lad_rank: number;
+  lad_rank_description: string;
 };
 
 export type DeprivationDomain = {
-  domain?: string;
-  label?: string;
-  short_label?: string;
-  description?: string;
-  rank?: number;
-  decile?: number;
-  score?: number;
-  score_label?: string;
-  score_short?: string;
-  lad_rank?: number;
+  domain: string;
+  label: string;
+  short_label: string;
+  description: string;
+  rank: number;
+  decile: number;
+  score: number;
+  score_label: string;
+  score_short: string;
+  lad_rank: number;
 };
 
 export type DeprivationMetadata = {
-  source?: string;
-  total_lsoas?: number;
-  total_lads?: number;
-  score_explanation?: string;
-  rank_explanation?: string;
-  neighbourhood_explanation?: string;
+  source: string;
+  total_lsoas: number;
+  total_lads: number;
+  score_explanation: string;
+  rank_explanation: string;
+  neighbourhood_explanation: string;
 };
 
 export type DeprivationResponse = {
-  postcode?: string;
-  lsoa?: AreaLocationInfo;
-  lad?: AreaLocationInfo;
-  overall?: OverallDeprivation;
-  domains?: Array<DeprivationDomain>;
-  metadata?: DeprivationMetadata;
+  postcode: string;
+  lsoa: AreaLocationInfo;
+  lad: AreaLocationInfo;
+  overall: OverallDeprivation;
+  domains: Array<DeprivationDomain>;
+  metadata: DeprivationMetadata;
 };
 
 export type PropertyListing = {
-  id?: string;
-  street?: string;
-  postcode?: string;
-  transaction_type?: string;
-  latest_status?: string;
-  latest_price?: number;
-  source?: string;
-  bedrooms?: number;
-  bathrooms?: number;
-  reception_rooms?: number;
-  property_type?: string;
-  ownership?: string;
-  is_new_build?: boolean;
-  has_garden?: boolean;
-  has_parking?: boolean;
-  has_solar_panels?: boolean;
-  is_reduced?: boolean;
-  times_reduced?: number;
-  is_withdrawn?: boolean;
-  days_on_market?: number;
-  added_date?: string;
-  agent_name?: string;
+  id: string;
+  street: string;
+  postcode: string;
+  transaction_type: string;
+  latest_status: string;
+  latest_price: number;
+  source: string;
+  bedrooms: number;
+  bathrooms: number;
+  reception_rooms: number;
+  property_type: string;
+  ownership: string;
+  is_new_build: boolean;
+  has_garden: boolean;
+  has_parking: boolean;
+  has_solar_panels: boolean;
+  is_reduced: boolean;
+  times_reduced: number;
+  is_withdrawn: boolean;
+  days_on_market: number;
+  added_date: string;
+  agent_name: string;
 };
 
 export type LiveListingsResponse = {
-  count?: number;
-  page?: number;
-  page_size?: number;
-  total_pages?: number;
-  results?: Array<PropertyListing>;
+  count: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+  results: Array<PropertyListing>;
 };
+
+export type GetAddressPostcodeByPostcodeData = {
+  body?: never;
+  path: {
+    /**
+     * UK postcode (e.g. SW1A 2AA, E1 1AA)
+     */
+    postcode: string;
+  };
+  query?: never;
+  url: "/address/postcode/{postcode}";
+};
+
+export type GetAddressPostcodeByPostcodeResponses = {
+  200: PostcodeLookupResponse;
+};
+
+export type GetAddressPostcodeByPostcodeResponse =
+  GetAddressPostcodeByPostcodeResponses[keyof GetAddressPostcodeByPostcodeResponses];
 
 export type GetAddressFindData = {
   body?: never;

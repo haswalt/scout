@@ -2,6 +2,7 @@
 
 export {
   getAddressFind,
+  getAddressPostcodeByPostcode,
   getDeprivation,
   getLiveListingsSearch,
   type Options,
@@ -17,6 +18,9 @@ export type {
   GetAddressFindData,
   GetAddressFindResponse,
   GetAddressFindResponses,
+  GetAddressPostcodeByPostcodeData,
+  GetAddressPostcodeByPostcodeResponse,
+  GetAddressPostcodeByPostcodeResponses,
   GetDeprivationData,
   GetDeprivationResponse,
   GetDeprivationResponses,
@@ -25,5 +29,7 @@ export type {
   GetLiveListingsSearchResponses,
   LiveListingsResponse,
   OverallDeprivation,
+  PostcodeLookup,
+  PostcodeLookupResponse,
   PropertyListing,
 } from "./types.gen";

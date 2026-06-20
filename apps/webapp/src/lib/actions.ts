@@ -3,9 +3,12 @@
 import {
   DeprivationResponse,
   getAddressFind,
+  getAddressPostcodeByPostcode,
   getDeprivation,
   getLiveListingsSearch,
   LiveListingsResponse,
+  PostcodeLookup,
+  PostcodeLookupResponse,
 } from "@repo/homedata";
 
 export async function fetchPostcode(address: string) {
@@ -80,8 +83,33 @@ export async function fetchDeprivationData(
         postcode,
       },
     });
+
     return data;
   } catch (error) {
     console.error("HomeData deprivation lookup failed", error);
+  }
+}
+
+export async function fetchLocation(
+  postcode: string,
+): Promise<PostcodeLookup | undefined> {
+  try {
+    const { data } = await getAddressPostcodeByPostcode({
+      cache: "force-cache",
+      next: {
+        revalidate: 3600,
+        tags: ["deprivation"],
+      },
+      throwOnError: true,
+      path: {
+        postcode,
+      },
+    });
+
+    if (data.addresses.length) {
+      return data.addresses[0];
+    }
+  } catch (error) {
+    console.error("HomeData location lookup failed", error);
   }
 }
