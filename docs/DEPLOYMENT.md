@@ -138,6 +138,12 @@ passed the workflow rather than rebuilding source separately.
 Create or link a Vercel project with its Root Directory set to `apps/webapp`.
 Configure `HOMEDATA_API_KEY` in Preview and Production.
 
+Set the Framework Preset to **Next.js** and leave Output Directory empty so
+Vercel uses the framework output automatically. The workflow runs Vercel CLI
+commands from the repository root; Vercel then applies the configured
+`apps/webapp` Root Directory. `apps/webapp/vercel.json` records the framework
+choice.
+
 Add these GitHub Actions repository secrets:
 
 | Secret              | Purpose                             |
@@ -169,6 +175,19 @@ the Vercel secrets exist and all prerequisite jobs passed.
 
 Confirm the matching Vercel environment contains the expected variables and
 rerun the workflow after correcting Vercel configuration.
+
+### Vercel expects a `public` output directory
+
+The project is configured as a generic static site. In Vercel Project Settings:
+
+1. set Root Directory to `apps/webapp`;
+2. set Framework Preset to **Next.js**;
+3. clear Output Directory so it uses automatic framework detection.
+
+Do not set Output Directory to `public` or `.next` for this application.
+When using Vercel CLI from this monorepo, run it from the repository root. Do
+not also set its working directory to `apps/webapp`, because the project Root
+Directory would then be applied twice.
 
 ### GitHub Release was not created
 
