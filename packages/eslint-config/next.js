@@ -25,6 +25,7 @@ export const nextJsConfig = [
     "build/**",
     "next-env.d.ts",
     "styled-system/**",
+    "postcss.config.*",
   ]),
   {
     ...pluginReact.configs.flat.recommended,
