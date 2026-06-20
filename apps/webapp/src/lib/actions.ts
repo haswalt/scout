@@ -1,7 +1,9 @@
 "use server";
 
 import {
+  DeprivationResponse,
   getAddressFind,
+  getDeprivation,
   getLiveListingsSearch,
   LiveListingsResponse,
 } from "@repo/homedata";
@@ -61,4 +63,25 @@ export async function fetchProperties(
   }
 
   return [];
+}
+
+export async function fetchDeprivationData(
+  postcode: string,
+): Promise<DeprivationResponse | undefined> {
+  try {
+    const { data } = await getDeprivation({
+      cache: "force-cache",
+      next: {
+        revalidate: 3600,
+        tags: ["deprivation"],
+      },
+      throwOnError: true,
+      query: {
+        postcode,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("HomeData deprivation lookup failed", error);
+  }
 }
