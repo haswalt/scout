@@ -59,4 +59,14 @@ describe("Search", () => {
 
     expect(onSubmit).toHaveBeenCalledOnce();
   });
+
+  it("renders a non-interactive value in read-only mode", () => {
+    render(<Search readOnly size="header" value="EH3 9NE" />);
+
+    expect(screen.getByText("EH3 9NE")).toBeInTheDocument();
+    expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Explore" }),
+    ).not.toBeInTheDocument();
+  });
 });

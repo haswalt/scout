@@ -6,12 +6,28 @@ import { AiSummary } from "./";
 describe("AiSummary", () => {
   it("renders content and forwards native attributes", () => {
     render(
-      <AiSummary data-testid="ai-summary">
-        Hello world!
-      </AiSummary>,
+      <AiSummary
+        summary="Hello world!"
+        className="consumer-class"
+        data-testid="ai-summary"
+      />,
     );
 
     expect(screen.getByText("Hello world!")).toBeInTheDocument();
-    expect(screen.getByTestId("ai-summary")).toBeInTheDocument();
+    expect(screen.getByTestId("ai-summary")).toHaveClass("consumer-class");
+    expect(screen.getByText("Hello world!")).toHaveAttribute(
+      "aria-live",
+      "polite",
+    );
+  });
+
+  it("shows progress while the summary is streaming", () => {
+    render(<AiSummary summary="Partial summary" streaming />);
+
+    expect(screen.getByText("analysing…")).toBeInTheDocument();
+    expect(screen.getByText("Partial summary")).toHaveAttribute(
+      "aria-live",
+      "polite",
+    );
   });
 });

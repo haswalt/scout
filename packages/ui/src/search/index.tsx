@@ -48,15 +48,17 @@ export const Search = ({
           {...props}
         />
       )}
-      <div className={styles.submit}>
-        <Button
-          type="submit"
-          size={size === "header" ? "sm" : "lg"}
-          disabled={!valid}
-        >
-          Explore
-        </Button>
-      </div>
+      {!readOnly && (
+        <div className={styles.submit}>
+          <Button
+            type="submit"
+            size={size === "header" ? "sm" : "lg"}
+            disabled={!valid}
+          >
+            Explore
+          </Button>
+        </div>
+      )}
     </Root>
   );
 };

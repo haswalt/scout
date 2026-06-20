@@ -1,6 +1,7 @@
 "use client";
 
 import { SparkleIcon } from "lucide-react";
+import { cx } from "../../styled-system/css";
 import { aiSummaryStyles } from "./styles";
 import { Typography } from "../typography";
 import { type AiSummaryProps } from "./types";
@@ -14,14 +15,19 @@ import { type AiSummaryProps } from "./types";
  * <AiSummary summary="Summary text" streaming />
  * ```
  */
-export const AiSummary = ({ streaming, summary }: AiSummaryProps) => {
+export const AiSummary = ({
+  streaming,
+  summary,
+  className,
+  ...props
+}: AiSummaryProps) => {
   const styles = aiSummaryStyles();
 
   return (
-    <div className={styles.root}>
+    <div className={cx(styles.root, className)} {...props}>
       <div className={styles.header}>
         <div className={styles.tag}>
-          <SparkleIcon size={12} />
+          <SparkleIcon size={12} aria-hidden="true" />
           <Typography as="span" variant="caption" tone="accent">
             AI summary
           </Typography>
@@ -35,7 +41,7 @@ export const AiSummary = ({ streaming, summary }: AiSummaryProps) => {
           </div>
         )}
       </div>
-      <Typography variant="editorial" tone="heading">
+      <Typography variant="editorial" tone="heading" aria-live="polite">
         {summary}
         {streaming && <span className={styles.cursor} />}
       </Typography>

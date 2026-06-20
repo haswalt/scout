@@ -22,4 +22,4 @@ export const CardMedia = withContext("div", "media");
 export const CardHeader = withContext("div", "header");
 export const CardBody = withContext("div", "body");
 export const CardFooter = withContext("div", "footer");
-export const CardDivider = withContext("div", "divider");
+export const CardDivider = withContext("hr", "divider");

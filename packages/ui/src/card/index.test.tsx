@@ -1,18 +1,27 @@
 import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
-import * as Card from "./";
+import {
+  Card,
+  CardBody,
+  CardDivider,
+  CardFooter,
+  CardHeader,
+  CardMedia,
+} from "./";
 
 describe("Card", () => {
   it("renders every region with its semantic element", () => {
     render(
-      <Card.Root data-testid="card">
-        <Card.Media src="/park.jpg" alt="A local park" />
-        <Card.Header>Header</Card.Header>
-        <Card.Body>Body</Card.Body>
-        <Card.Divider />
-        <Card.Footer>Footer</Card.Footer>
-      </Card.Root>,
+      <Card data-testid="card">
+        <CardMedia>
+          <img src="/park.jpg" alt="A local park" />
+        </CardMedia>
+        <CardHeader>Header</CardHeader>
+        <CardBody>Body</CardBody>
+        <CardDivider />
+        <CardFooter>Footer</CardFooter>
+      </Card>,
     );
 
     expect(screen.getByTestId("card").tagName).toBe("DIV");
@@ -28,7 +37,7 @@ describe("Card", () => {
 
   it("shares variant styles with all card regions", () => {
     render(
-      <Card.Root
+      <Card
         padding="lg"
         row
         tone="tint"
@@ -36,10 +45,10 @@ describe("Card", () => {
         interactive
         data-testid="card"
       >
-        <Card.Header data-testid="header">Header</Card.Header>
-        <Card.Body data-testid="body">Body</Card.Body>
-        <Card.Footer data-testid="footer">Footer</Card.Footer>
-      </Card.Root>,
+        <CardHeader data-testid="header">Header</CardHeader>
+        <CardBody data-testid="body">Body</CardBody>
+        <CardFooter data-testid="footer">Footer</CardFooter>
+      </Card>,
     );
 
     expect(screen.getByTestId("card").className).not.toBe("");
@@ -50,9 +59,9 @@ describe("Card", () => {
 
   it("can expose interactive card semantics and disabled state", () => {
     render(
-      <Card.Root interactive role="button" tabIndex={0} aria-disabled="true">
+      <Card interactive role="button" tabIndex={0} aria-disabled="true">
         View neighbourhood
-      </Card.Root>,
+      </Card>,
     );
 
     expect(
