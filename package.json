@@ -2,7 +2,7 @@
   "name": "scout",
   "private": true,
   "scripts": {
-    "build": "node --env-file-if-exists=.env.local ./node_modules/turbo/bin/turbo run build",
+    "build": "turbo run build",
     "dev": "node --env-file-if-exists=.env.local ./node_modules/turbo/bin/turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
