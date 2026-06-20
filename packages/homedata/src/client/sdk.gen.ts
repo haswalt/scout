@@ -49,7 +49,7 @@ export const getAddressFind = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     security: [{ name: "Authorization", type: "apiKey" }],
-    url: "/address/find",
+    url: "/address/find/",
     ...options,
   });
 

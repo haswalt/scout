@@ -103,9 +103,9 @@ export type GetAddressFindData = {
     /**
      * Street address, postcode, or place name
      */
-    query: string;
+    q: string;
   };
-  url: "/address/find";
+  url: "/address/find/";
 };
 
 export type GetAddressFindResponses = {

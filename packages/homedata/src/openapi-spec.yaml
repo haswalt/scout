@@ -254,13 +254,13 @@ components:
 security:
   - ApiKeyAuth: []
 paths:
-  /address/find:
+  /address/find/:
     get:
       summary: Address Find
       description: Search for UK addresses by query string
       parameters:
         - in: query
-          name: query
+          name: q
           required: true
           schema:
             type: string
