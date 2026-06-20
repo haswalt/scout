@@ -36,14 +36,14 @@ export const typographyStyles = cva({
       },
       // Small supporting / footer text.
       caption: {
-        fontSize: "0.8125rem",
+        fontSize: "0.7rem",
         lineHeight: "1.4",
         fontWeight: "600",
       },
       // The streaming AI summary — serif, alive.
       editorial: {
         textStyle: "editorial",
-        fontSize: { base: "1.125rem", md: "1.3125rem" },
+        fontSize: { base: "1rem", md: "1.2rem" },
       },
     },
     tone: {
