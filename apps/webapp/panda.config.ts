@@ -1,5 +1,5 @@
 import { defineConfig } from "@pandacss/dev";
-import scoutPreset from "@repo/ui/preset";
+import scoutPreset from "@repo/scout-preset";
 
 export default defineConfig({
   preflight: true,
