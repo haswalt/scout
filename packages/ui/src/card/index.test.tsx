@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
-import { Card } from "./";
+import * as Card from "./";
 
 describe("Card", () => {
   it("renders every region with its semantic element", () => {
@@ -50,12 +50,7 @@ describe("Card", () => {
 
   it("can expose interactive card semantics and disabled state", () => {
     render(
-      <Card.Root
-        interactive
-        role="button"
-        tabIndex={0}
-        aria-disabled="true"
-      >
+      <Card.Root interactive role="button" tabIndex={0} aria-disabled="true">
         View neighbourhood
       </Card.Root>,
     );

@@ -17,11 +17,9 @@ import { withContext, withProvider } from "./styles";
  * </Card.Root>
  * ```
  */
-export const Card = {
-  Root: withProvider("div", "root"),
-  Media: withContext("img", "media"),
-  Header: withContext("div", "header"),
-  Body: withContext("div", "body"),
-  Footer: withContext("div", "footer"),
-  Divider: withContext("hr", "divider"),
-};
+export const Card = withProvider("div", "root");
+export const CardMedia = withContext("div", "media");
+export const CardHeader = withContext("div", "header");
+export const CardBody = withContext("div", "body");
+export const CardFooter = withContext("div", "footer");
+export const CardDivider = withContext("div", "divider");
