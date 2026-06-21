@@ -2,6 +2,7 @@
 
 import { ADDRESS_SUGGESTIONS } from "@/config/constants";
 import { fetchPostcode } from "@/lib/actions";
+import { isUkPostcode, postcodeToSlug } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/button";
 import { Center, VStack, Wrap } from "@repo/ui/jsx";
@@ -22,9 +23,8 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    setValue,
-    trigger,
-    formState: { isValid, isSubmitting },
+    setError,
+    formState: { errors, isValid, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -34,22 +34,32 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<FormValues> = async ({ address }) => {
-    const postcode = await fetchPostcode(address);
+    const postcode = isUkPostcode(address)
+      ? postcodeToSlug(address)
+      : await fetchPostcode(address);
+
+    if (!postcode) {
+      setError("address", {
+        message: "We couldn't find that location. Try a postcode or address.",
+      });
+      return;
+    }
+
     router.push(`/${postcode}`, {
       transitionTypes: ["nav-forward"],
     });
   };
 
-  const applySuggestion = (suggestion: string) => {
-    setValue("address", suggestion);
-    trigger("address");
-    handleSubmit(onSubmit)();
+  const applySuggestion = (postcode: string) => {
+    router.push(`/${postcodeToSlug(postcode)}`, {
+      transitionTypes: ["nav-forward"],
+    });
   };
 
   return (
     <Center as="main" minH="100dvh" p="lg" bg="bg">
       <VStack gap="md" textAlign="center" maxW="prose" w="100%">
-        <Typography variant="eyebrow" tone="label" as="h2">
+        <Typography variant="eyebrow" tone="label" as="p">
           Scout
         </Typography>
         <Typography variant="display" tone="heading" as="h1" align="center">
@@ -67,8 +77,20 @@ export default function Home() {
           placeholder="Try a postcode, e.g. BS8 2NT"
           autoComplete="postal-code"
           loading={isSubmitting}
+          aria-describedby={errors.address ? "address-error" : undefined}
+          aria-invalid={Boolean(errors.address)}
           {...register("address")}
         />
+        {errors.address && (
+          <Typography
+            id="address-error"
+            role="alert"
+            variant="caption"
+            tone="danger"
+          >
+            {errors.address.message}
+          </Typography>
+        )}
 
         <Wrap gap="sm" justify="center" align="center">
           <Typography variant="caption" tone="label">
