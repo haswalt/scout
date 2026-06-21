@@ -14,7 +14,10 @@ type Props = {
 
 export const PropertyCard = ({ index, property }: Props) => {
   return (
-    <Card aria-label={`${property.latest_price}, ${property.street}`}>
+    <Card
+      as="article"
+      aria-label={`${formatCurrency(property.latest_price)}, ${property.street}`}
+    >
       <CardMedia
         height="130px"
         backgroundImage="repeating-linear-gradient(135deg, {colors.lilac.100} 0 11px, {colors.lilac.200} 11px 22px)"

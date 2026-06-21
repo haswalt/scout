@@ -9,7 +9,7 @@ type Props = {
 export const PropertySpec = ({ icon: Glyph, value }: Props) => {
   return (
     <Typography variant="caption" tone="accentMuted">
-      <Glyph size="18" />
+      <Glyph size="18" aria-hidden="true" />
       {value}
     </Typography>
   );

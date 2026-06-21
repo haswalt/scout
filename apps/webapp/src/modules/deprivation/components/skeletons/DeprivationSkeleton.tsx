@@ -5,7 +5,12 @@ import { AiSummary } from "@repo/ui/ai-summary";
 
 export const DeprivationSkeleton = () => {
   return (
-    <Flex direction="column" gap="lg">
+    <Flex
+      direction="column"
+      gap="lg"
+      role="status"
+      aria-label="Loading local area profile"
+    >
       <AiSummary streaming />
 
       <GlanceCardSkeleton />

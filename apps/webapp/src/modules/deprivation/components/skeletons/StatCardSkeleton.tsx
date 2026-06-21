@@ -6,13 +6,13 @@ export const StatCardSkeleton = () => {
   return (
     <Card>
       <CardHeader>
-        <Skeleton shape="block" w="38px" h="38px" />
-        <Skeleton shape="pill" width="86px" height="18px" />
+        <Skeleton aria-hidden="true" shape="block" w="38px" h="38px" />
+        <Skeleton aria-hidden="true" shape="pill" width="86px" height="18px" />
       </CardHeader>
       <CardBody>
         <VStack gap="xs" alignItems="start">
-          <Skeleton w="40%" />
-          <Skeleton w="50%" />
+          <Skeleton aria-hidden="true" w="40%" />
+          <Skeleton aria-hidden="true" w="50%" />
         </VStack>
       </CardBody>
     </Card>

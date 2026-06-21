@@ -1,3 +1,4 @@
+import { EmptyState } from "@/components/empty-state";
 import { fetchDeprivationData } from "@/lib/actions";
 import { Flex, Grid } from "@repo/ui/jsx";
 import { SummaryCard } from "./SummaryCard";
@@ -11,11 +12,21 @@ export const DeprivationContent = async ({ postcode }: Props) => {
   const result = await fetchDeprivationData(postcode);
 
   if (!result) {
-    return null;
+    return (
+      <EmptyState
+        title="Area profile unavailable"
+        description="We couldn't load the local area profile right now. Please try again later."
+      />
+    );
   }
 
   return (
-    <Flex direction="column" gap="lg">
+    <Flex
+      as="section"
+      direction="column"
+      gap="lg"
+      aria-label="Local area profile"
+    >
       <SummaryCard data={result} />
 
       <GlanceCard data={result} />

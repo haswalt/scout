@@ -1,8 +1,10 @@
 "use client";
 
+import { normalizePostcode } from "@/lib/utils";
 import { Container, HStack, styled } from "@repo/ui/jsx";
 import { Search } from "@repo/ui/search";
 import { Typography } from "@repo/ui/typography";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export const Header = () => {
@@ -19,11 +21,17 @@ export const Header = () => {
     >
       <Container maxW="shell" py="md">
         <HStack gap="lg" justify="space-between">
-          <Typography variant="title" tone="heading">
-            Scout
-          </Typography>
+          <Link href="/" aria-label="Scout home">
+            <Typography as="span" variant="title" tone="heading">
+              Scout
+            </Typography>
+          </Link>
 
-          <Search size="header" value={decodeURIComponent(postcode)} readOnly />
+          <Search
+            size="header"
+            value={normalizePostcode(decodeURIComponent(postcode))}
+            readOnly
+          />
         </HStack>
       </Container>
     </styled.header>

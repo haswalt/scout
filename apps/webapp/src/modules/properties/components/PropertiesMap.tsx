@@ -15,6 +15,8 @@ export const PropertiesMap = () => {
       rounded="md"
       h={{ base: "280px", md: "380px" }}
       overflow="hidden"
+      role="region"
+      aria-label="Map showing the searched area"
     >
       <Map
         initialViewState={{
