@@ -49,12 +49,13 @@ export const typographyStyles = cva({
     tone: {
       default: { color: "text" }, //      #2a2440 body / values
       muted: { color: "textMuted" }, //   #6f6a85 sub-copy
-      label: { color: "textLabel" }, //   #9b93b4 eyebrows / units / footer
-      faint: { color: "textFaint" }, //   #b7b1c9 secondary captions
+      label: { color: "textLabel" }, //   eyebrows / units / footer
+      faint: { color: "textFaint" }, //   secondary captions
       heading: { color: "heading" }, //   #2a1b52 titles
       accent: { color: "accent" }, //     #4c2c92 brand
       accentMid: { color: "accentMid" }, // #6b4fb0 AI status label
       accentMuted: { color: "accentMuted" }, // #5b4e86 spec / feature text
+      danger: { color: "danger.fg" },
       onAccent: { color: "white" },
       inherit: { color: "inherit" },
     },

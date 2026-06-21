@@ -67,8 +67,8 @@ export default definePreset({
           DEFAULT: { value: "#2a2440" },
           strong: { value: "#2a1b52" },
           muted: { value: "#6f6a85" },
-          label: { value: "#9b93b4" }, // eyebrows, units, footer labels
-          faint: { value: "#b7b1c9" }, // secondary captions
+          label: { value: "#655f78" }, // eyebrows, units, footer labels
+          faint: { value: "#6f6a85" }, // secondary captions
         },
         line: { value: "#eee8f7" },
         // Illustrative neighbourhood-map palette.
@@ -78,9 +78,9 @@ export default definePreset({
           water: { value: "#d7e6f2" },
           road: { value: "#fbfbfd" },
         },
-        success: { fg: { value: "#1e8e5e" }, bg: { value: "#e7f6ee" } },
-        warning: { fg: { value: "#b07400" }, bg: { value: "#fbf1dc" } },
-        danger: { fg: { value: "#c0492b" }, bg: { value: "#fbeae6" } },
+        success: { fg: { value: "#167348" }, bg: { value: "#e7f6ee" } },
+        warning: { fg: { value: "#966000" }, bg: { value: "#fbf1dc" } },
+        danger: { fg: { value: "#b13f24" }, bg: { value: "#fbeae6" } },
       },
     },
 
