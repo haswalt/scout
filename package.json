@@ -10,6 +10,7 @@
     "codegen": "turbo run codegen format",
     "test": "turbo run test",
     "test:ci": "turbo run test -- --run",
+    "test:e2e": "turbo run test:e2e",
     "test:coverage": "turbo run test -- --coverage --run",
     "generate:component": "turbo gen component"
   },

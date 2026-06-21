@@ -14,6 +14,11 @@ node_modules
 
 # Testing
 coverage
+playwright-report
+test-results
+
+# Local package store
+.pnpm-store
 
 # Turbo
 .turbo

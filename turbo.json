@@ -1,7 +1,8 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
-  "globalEnv": ["HOMEDATA_API_KEY"],
+  "globalEnv": ["HOMEDATA_API_KEY", "HOMEDATA_BASE_URL"],
+  "globalPassThroughEnv": ["CI"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -13,7 +14,7 @@
         "styled-system/**",
         "styles.css"
       ],
-      "env": ["HOMEDATA_API_KEY"]
+      "env": ["HOMEDATA_API_KEY", "HOMEDATA_BASE_URL"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -27,6 +28,10 @@
     },
     "codegen": {},
     "format": {},
-    "test": {}
+    "test": {},
+    "test:e2e": {
+      "cache": false,
+      "outputs": ["playwright-report/**", "test-results/**"]
+    }
   }
 }

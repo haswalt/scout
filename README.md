@@ -35,7 +35,7 @@ Environment files are ignored and must not be committed.
 | `pnpm check-types`        | Run TypeScript checks                           |
 | `pnpm test`               | Run package tests in watch mode where supported |
 | `pnpm test:ci`            | Run UI tests once with enforced coverage        |
-| `pnpm test:e2e`           | Run the current E2E placeholder                 |
+| `pnpm test:e2e`           | Run Playwright journeys and accessibility scans |
 | `pnpm codegen`            | Regenerate API and styling outputs              |
 | `pnpm generate:component` | Generate a UI component scaffold                |
 
@@ -58,14 +58,15 @@ Environment files are ignored and must not be committed.
 - [Testing](docs/TESTING.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [AI-assisted development](docs/AI-USAGE.md)
+- [Architecture decisions](docs/adr/README.md)
 
 ## CI and deployment
 
 GitHub Actions runs linting, type checks, unit tests with coverage, the workspace
-build, and an explicit E2E placeholder. Pull requests from repository branches
-and pushes to `develop` deploy to Vercel Preview. `v*` tags deploy to
-Production. Successful tag deployments create a GitHub Release and generated
-changelog.
+build, and Playwright browser journeys with axe accessibility scans. Pull
+requests from repository branches and pushes to `develop` deploy to Vercel
+Preview. `v*` tags deploy to Production. Successful tag deployments create a
+GitHub Release and generated changelog.
 
 See [deployment documentation](docs/DEPLOYMENT.md) for Vercel project settings,
 required GitHub secrets, release tagging, and environment setup. See
@@ -75,5 +76,4 @@ required GitHub secrets, release tagging, and environment setup. See
 
 Shared UI components use native semantics, accessible names, keyboard behavior,
 disabled states, and decorative icon treatment. Accessibility behavior is
-covered by colocated unit tests. Automated browser-level accessibility checks
-should be added with the future E2E suite.
+covered by colocated unit tests and browser-level axe scans in the E2E suite.
