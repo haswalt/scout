@@ -6,6 +6,7 @@ import { type searchStyles } from "./styles";
 type SearchStyleProps = RecipeVariantProps<typeof searchStyles>;
 
 export type SearchProps = SearchStyleProps & {
+  loading?: boolean;
   valid?: boolean;
   readOnly?: boolean;
 } & Pick<ComponentProps<"form">, "onSubmit"> &

@@ -200,6 +200,10 @@ export default definePreset({
         from: { opacity: "1", transform: "translateY(0)" },
         to: { opacity: "0", transform: "translateY(-112%)" },
       },
+      spin: {
+        from: { transform: "rotate(0deg)" },
+        to: { transform: "rotate(360deg)" },
+      },
     },
 
     layerStyles: {
@@ -226,6 +230,11 @@ export default definePreset({
       slideUpOut: {
         value: {
           animation: "slideUpOut 0.72s cubic-bezier(0.7, 0, 0.18, 1) both",
+        },
+      },
+      spin: {
+        value: {
+          animation: "spin 1s infinite",
         },
       },
     },

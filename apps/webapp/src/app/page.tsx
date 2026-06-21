@@ -66,6 +66,7 @@ export default function Home() {
           valid={isValid && !isSubmitting}
           placeholder="Try a postcode, e.g. BS8 2NT"
           autoComplete="postal-code"
+          loading={isSubmitting}
           {...register("address")}
         />
 

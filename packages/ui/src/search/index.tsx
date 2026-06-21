@@ -27,6 +27,7 @@ export const Search = ({
   onSubmit,
   size,
   valid,
+  loading,
   readOnly,
   ...props
 }: SearchProps) => {
@@ -54,6 +55,7 @@ export const Search = ({
             type="submit"
             size={size === "header" ? "sm" : "lg"}
             disabled={!valid}
+            loading={loading}
           >
             Explore
           </Button>

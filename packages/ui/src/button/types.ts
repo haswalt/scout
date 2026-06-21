@@ -7,5 +7,5 @@ type ButtonStyleProps = RecipeVariantProps<typeof buttonStyles>;
 
 export type ButtonProps = ButtonStyleProps &
   ComponentPropsWithoutRef<"button"> & {
-    appName: string;
+    loading?: boolean;
   };
