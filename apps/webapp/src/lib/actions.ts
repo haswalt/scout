@@ -9,8 +9,11 @@ import {
   type LiveListingsResponse,
   type PostcodeLookup,
 } from "@repo/homedata";
+import { normalizePostcode, postcodeToSlug } from "./utils";
 
-export async function fetchPostcode(address: string) {
+export async function fetchPostcode(
+  address: string,
+): Promise<string | undefined> {
   try {
     const { data } = await getAddressFind({
       cache: "force-cache",
@@ -27,23 +30,18 @@ export async function fetchPostcode(address: string) {
     const suggestion = data.suggestions.at(0);
 
     if (suggestion) {
-      return suggestion.postcode.toLowerCase().replaceAll(" ", "");
+      return postcodeToSlug(suggestion.postcode);
     }
   } catch (error) {
     console.error("HomeData address lookup failed", error);
   }
-
-  return "po110qw";
 }
 
 export async function fetchProperties(
   postcode: string,
 ): Promise<LiveListingsResponse["results"]> {
   try {
-    const normalizedPostcode = postcode
-      .replaceAll(" ", "")
-      .toUpperCase()
-      .replace(/(.+)(.{3})$/, "$1 $2");
+    const normalizedPostcode = normalizePostcode(postcode);
 
     const { data } = await getLiveListingsSearch({
       cache: "force-cache",
