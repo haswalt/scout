@@ -14,7 +14,7 @@ pnpm build
 ```
 
 During development, `pnpm test` starts package test runners through Turborepo.
-The CI command runs the UI package once with coverage enabled.
+The CI command runs UI and webapp tests once.
 
 ## Unit and accessibility tests
 
@@ -41,19 +41,32 @@ pnpm --filter @repo/ui test -- --run
 pnpm --filter @repo/ui coverage -- --run
 ```
 
+## Application tests
+
+Application tests live beside app-owned code in `apps/webapp/src`. They cover
+postcode formatting, HomeData adapters, domain-to-visual mappings, and
+application presentation such as empty states.
+
+Run only webapp tests:
+
+```sh
+pnpm --filter webapp test -- --run
+```
+
 ## End-to-end tests
 
-E2E coverage is intentionally a placeholder. `pnpm test:e2e` currently reports
-that no E2E runner is configured, and CI exposes a clearly named placeholder
-job.
+Playwright tests live in `apps/webapp-e2e`. They cover the highest-value browser
+contracts: keyboard search, curated-location navigation, results-page
+rendering, and axe accessibility scans.
 
-When E2E tests are added:
+```sh
+pnpm test:e2e
+```
 
-1. choose and install the browser runner;
-2. replace the root `test:e2e` script with the real command;
-3. start or target a preview deployment in CI;
-4. store screenshots, traces, and reports as workflow artifacts;
-5. remove “placeholder” from the workflow job name.
+Playwright starts a local HomeData fixture server on port 3200 and the webapp on
+port 3100. The suite never requires a live API key or third-party data. CI
+installs Chromium and uploads the HTML report, traces, and screenshots when a
+run fails.
 
-Initial journeys should cover postcode search, suggestion selection, navigation
-to an area page, keyboard-only operation, and an automated accessibility scan.
+Stop any existing `next dev` process for `apps/webapp` before running the suite;
+Next.js permits only one development server per build directory.

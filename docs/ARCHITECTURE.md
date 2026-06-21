@@ -7,7 +7,7 @@ application.
 
 ```text
 apps/webapp
-  Next.js App Router application and product-specific UI
+  Next.js App Router application, product modules, and product-specific UI
 
 packages/ui
   Shared React components and generated Panda CSS utilities
@@ -41,6 +41,8 @@ apps/webapp
 ```
 
 `apps/webapp` owns routing, forms, navigation, and product composition.
+Modules under `apps/webapp/src/modules` own a self-contained product
+capability, including data loading, Suspense, skeletons, empty states, and UI.
 `packages/ui` owns reusable presentation and interaction primitives.
 `packages/homedata` owns the external API contract and authentication setup.
 
@@ -77,6 +79,9 @@ adapter code.
 
 See [Code generation](CODE_GENERATION.md) for regeneration commands, generated
 file ownership, and the UI component scaffold workflow.
+
+Architecture decisions and their trade-offs are recorded in
+[docs/adr](adr/README.md).
 
 ## Build orchestration
 

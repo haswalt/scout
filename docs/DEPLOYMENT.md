@@ -14,10 +14,7 @@ the same quality gate:
 - lint and TypeScript checks;
 - unit tests with enforced coverage;
 - a full workspace build;
-- the E2E placeholder job.
-
-The E2E job must be replaced with real browser tests before the workflow is
-treated as a complete release gate.
+- Playwright journeys and axe accessibility scans.
 
 ## Deployment matrix
 
@@ -99,7 +96,7 @@ git push origin v1.2.3
 For a `v*` tag, the workflow:
 
 1. checks out the exact tagged commit;
-2. runs lint, type checks, unit coverage, build, and the E2E placeholder;
+2. runs lint, type checks, unit coverage, build, and browser tests;
 3. pulls Vercel Production settings;
 4. builds and deploys to the `production` target;
 5. creates a GitHub Release only after deployment succeeds;

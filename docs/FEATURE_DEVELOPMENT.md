@@ -160,9 +160,9 @@ accessible names, keyboard and pointer behavior, disabled states, prop
 forwarding, and meaningful recipe variants. The package enforces 100% coverage.
 
 For application features, test product behavior at the closest useful boundary.
-Pure helpers should have unit tests, route/component behavior should have
-integration tests when an app test harness is introduced, and critical user
-journeys should be added to the future E2E suite.
+Pure helpers and data adapters should have unit tests, application presentation
+should have Testing Library tests, and critical user journeys should be added
+to the Playwright suite in `apps/webapp-e2e`.
 
 Do not duplicate generated-client tests. Test the handwritten OpenAPI contract,
 app adapter behavior, and user-visible result instead.
@@ -181,12 +181,13 @@ Before opening a pull request, run:
 pnpm lint
 pnpm check-types
 pnpm test:ci
+pnpm test:e2e
 pnpm build
 ```
 
 If generated inputs changed, regenerate and include the expected generated
-diff. If the feature changes an important browser journey, note the missing E2E
-coverage until the E2E runner is implemented.
+diff. If the feature changes an important browser journey, update its E2E
+coverage in the same pull request.
 
 ## Example: adding an area statistic
 
